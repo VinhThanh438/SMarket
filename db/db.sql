@@ -8,7 +8,8 @@ create table tb_user (
     user_name varchar(50) not null,
     user_role varchar(10) not null,
     user_password text,
-    oauth nvarchar(10) not null,
+    account_id text,
+    provider nvarchar(10) not null,
     avatar text,
     phone_number nvarchar(20),
     address text,
@@ -99,7 +100,7 @@ alter column state set default "đang xử lý";
 --------------------------------------------------------
 
 -- Insert new data -------------------------------------
-insert into tb_user (user_name, oauth, avatar, phone_number, address) values ("vinh thanh", "google", 
+insert into tb_user (user_name, provider, avatar, phone_number, address) values ("vinh thanh", "google", 
 "https://cdn.chotot.com/cF0tOBS0g0NiVGfUdarOnuFaHY5l3msXY2bkgRndklg/preset:listing/plain/7274771d608b08694c4257ae9ea74eb2-2839824952567390247.jpg",
 "0337083194", "Nam Tu Liem, Ha Noi");
 
@@ -108,7 +109,7 @@ insert into tb_product (user_id, product_name, price, description) values ("1000
 -- Select data -----------------------------------------
 select * from tb_user;
 
-select * from tb_product;
+select * from tb_product; 
 
 select * from tb_product_images;
 

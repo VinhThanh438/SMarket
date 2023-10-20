@@ -11,7 +11,8 @@ const cookieParser = require('cookie-parser');
 
 const userRoutes = require('./routes/user.route');
 const productRoutes = require('./routes/product.route');
-const authRoutes = require('./routes/auth.route');
+const ggRoutes = require('./routes/gg.auth.route');
+const fbRoutes = require('./routes/fb.auth.route');
 const allRoutes = require('./routes/all.route');
 require('express-async-errors');
 require('dotenv').config();
@@ -43,7 +44,8 @@ app.use(flash());
 
 userRoutes(app);
 productRoutes(app);
-authRoutes(app);
+ggRoutes(app);
+fbRoutes(app);
 allRoutes(app);
 app.use(errorHandle);
 

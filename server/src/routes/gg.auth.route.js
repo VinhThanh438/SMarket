@@ -1,15 +1,16 @@
-const passport = require('../config/passport');
+const passportGoogle = require('../controller/googleOauth');
 const router = require('express').Router();
 const { statusCode, message } = require('../until/httpResponse');
 const appError = require('../errors/appError');
 const { cookieOption } = require('../config/token');
-// const userController = require('../../../client/src/controller/user.controller');
 require('dotenv').config();
 
 module.exports = (app) => {
     router.get(
         '/google/callback',
-        passport.authenticate('google', { failureRedirect: '/login/failed' }),
+        passportGoogle.authenticate('google', {
+            failureRedirect: '/login/failed',
+        }),
         (req, res, next) => {
             // Successful authentication, redirect home.
             if (req.user) {
@@ -41,7 +42,7 @@ module.exports = (app) => {
 
     router.get(
         '/',
-        passport.authenticate('google', {
+        passportGoogle.authenticate('google', {
             successRedirect: `${process.env.SERVER_DOMAIN}/auth`,
             failureRedirect: '/login/failed',
         })
@@ -58,5 +59,5 @@ module.exports = (app) => {
         return res.redirect('/login');
     });
 
-    return app.use('/auth', router);
+    return app.use('/auth/google', router);
 };
