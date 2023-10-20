@@ -2,13 +2,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 passport.serializeUser((user, done) => {
-    process.nextTick(() =>
-        done(null, {
-            id: user.id,
-            username: user.name,
-            email: user._json.email,
-        })
-    );
+    process.nextTick(() => done(null, user));
 });
 
 passport.deserializeUser((user, done) => {
