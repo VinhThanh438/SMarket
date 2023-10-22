@@ -1,0 +1,226 @@
+
+
+.products_left{
+    width: 60%;
+}
+
+.product_show_main{
+
+}
+.product_item{
+    overflow: hidden;
+}
+.product_img_main{
+    position: relative;
+}
+.product_move{
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0.85;
+    position: absolute;
+    cursor: pointer;
+}
+.product_pre{
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px 20px;
+    
+}
+.product_next{
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px 20px;
+
+}
+.product_img_add_main{
+    position: relative;
+    margin-left: -4px;
+}
+.product_add_pre{
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 12px;
+}
+.product_add_next{
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 12px;
+}
+.product_img_add{
+
+}
+.product_img_add li{
+    width: 20%;
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    flex: 1 0 20%;
+    cursor: pointer;
+}
+
+.product_information{
+
+}
+.product_qt{
+    margin: 10px 0;
+}
+.product_name{
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.product_cost_interactive{
+}
+
+.product_cost{
+    color: var(--color_cost);
+    font-size: 16px;
+    width: 40%;
+}
+.product_interactive{
+    width: 60%;
+    justify-content: end;
+    margin-right: -8px;
+}
+.product_share{
+    display: block;
+    padding: 4px 8px;
+    margin: 0 8px;
+}
+
+.product_up{
+    opacity: 0.85;
+
+}
+.product_address{
+
+}
+
+.product_time_on{
+
+}
+.product_verify{
+
+}
+.product_container{
+    
+}
+.product_describe{
+ font-size: 16px;   
+}
+
+.product_contact{
+    text-decoration: underline;
+    color: blueviolet;
+}
+.products_right{
+    width: 40%;
+    margin-left: 16px;
+    /* background-color: #fff; */
+}
+.right_user{
+    padding: 16px 0 36px;
+}
+.user_avt{
+    width: 65px;
+    height: 65px;
+    background-image: url("https://cdn.chotot.com/uac2/2113272");
+    border-radius: 50%;
+    background-size: cover;
+    margin: 10px;
+}
+.user_information{
+
+}
+.user_information_top{
+    margin: 8px;
+}
+.user_name{
+    font-weight: bold;
+
+}
+.user_go_page{
+    /* background-color: orange; */
+    border:1px solid orange;
+    border-radius: 50px;
+    padding: 8px 16px;
+    color: orange;
+}
+.user_go_page:hover{
+    background-color: #ddd;
+}
+.user_information_content{
+    opacity: 0.85;
+}
+.user_major{
+
+}
+
+.user_status{
+
+}
+.user_status_icon{
+    font-size: 8px;
+    color: #589f39;
+    line-height: 16px;
+    width: 13px;
+    text-align: center;
+    display: inline-block;
+}
+
+.user_evaluate{
+
+}
+.user_evaluate_start{
+
+}
+.user_evaluate_start img{
+
+}
+.user_point > a{
+    color: blueviolet;
+}
+.right_contact_buy{
+    margin-top: 12px;
+    background-color: #fff;
+    padding:  8px 8px 24px;
+}
+.contact_buy_top{
+    margin: 8px 0;
+}
+.contact_buy_title{
+    font-size: 16px;
+    font-weight: bold;
+}
+.contact_feeback_percent{
+    opacity: 0.85;
+}
+.contact_suggest_container{
+    padding: 16px 0;
+}
+.contact_suggest{
+    padding: 4px 0;
+    overflow-y: hidden;
+}
+.list_suggestion{
+    width: fit-content;
+    display: flex;
+    /* width: 800px; */
+}
+.list_suggestion li{
+    display: inline-block;
+    margin: 0 4px;
+    background-color: #ccc;
+    padding: 4px 8px;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+.contact_phone{
+
+}
+.contact_chat{
+    color: green;
+}

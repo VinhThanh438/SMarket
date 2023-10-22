@@ -1,0 +1,402 @@
+@charset "UTF-8";
+html {
+  font-size: 14px;
+  font-family: Helvetica,Arial,sans-serif; }
+
+:root {
+  --bgc-orange:orange;
+  --bgc-white:white;
+  --height-header-container:36px;
+  --height-header:94px;
+  --width_center:1200px;
+  --height:60px;
+  --color_black:black;
+  --height_category_item:140px;
+  --color_cost:red;
+  --height_slider:300px; }
+
+.bg-orange {
+  background-color: var(--bgc-orange) !important; }
+
+a:hover {
+  color: currentColor;
+  text-decoration: none; }
+
+.margin_header {
+  margin-top: calc( var(--height-header) + 8px); }
+
+.w-20 {
+  width: 20%; }
+
+.p-x-16 {
+  padding-left: 16px !important;
+  padding-right: 16px !important; }
+
+.p-y-16 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important; }
+
+.p-yt-16 {
+  padding-top: 16px !important; }
+
+.p-yb-16 {
+  padding-bottom: 16px !important; }
+
+.m-y-8 {
+  margin-top: 8px;
+  margin-bottom: 8px; }
+
+.m-x-8 {
+  margin-left: 8px;
+  margin-right: 8px; }
+
+.m-y-16 {
+  margin-top: 16px;
+  margin-bottom: 16px; }
+
+.m-yt-16 {
+  margin-top: 16px; }
+
+.m-yb-16 {
+  margin-bottom: 16px; }
+
+.w-90 {
+  width: 90%; }
+
+.w-10 {
+  width: 10%; }
+
+.bg-ddd {
+  background-color: #ddd; }
+
+.p-y-8 {
+  padding-top: 8px;
+  padding-bottom: 8px; }
+
+.p-y-12 {
+  padding: 12px 0; }
+
+.outline-none {
+  outline: none; }
+
+.border-circle {
+  border-radius: 5px; }
+
+.border-none {
+  border: none; }
+
+.login_page {
+  background-color: #8585f0;
+  background-image: url(https://static.chotot.com/storage/marketplace/login-background.webp);
+  background-size: contain;
+  background-repeat: no-repeat; }
+
+/* Slider */
+#slider {
+  height: var(--height_slider);
+  margin-top: var(--height);
+  width: var(--width_center);
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: calc(var(--height-header) + 2px); }
+
+.pre_next_icon {
+  position: absolute;
+  top: 50%;
+  font-size: 16px;
+  padding: 20px 25px;
+  background-color: var(--bgc-white);
+  border-radius: 50%;
+  color: var(--color_black);
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 10; }
+
+.slider_pre_next > .fa-angle-left {
+  left: 0; }
+
+.slider_pre_next > .fa-angle-right {
+  right: 0; }
+
+.pre_next_icon:hover {
+  padding: 22px 27px;
+  background-color: #f3ecec; }
+
+.slider_dots {
+  /* background-color: #ccc; */
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; }
+
+.slider_dots li {
+  display: inline-block; }
+
+.slider_dots_icon {
+  color: var(--color_black);
+  margin: 0 4px; }
+
+.slider_wrapper {
+  overflow: hidden; }
+
+.slider_main {
+  transition: transform 0.25s linear; }
+
+.slider_item {
+  padding-top: 50%;
+  width: 100%;
+  flex: 1 0 100%;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  display: block;
+  background-size: cover;
+  aspect-ratio: 3/2;
+  background-size: contain; }
+
+.slider_1 {
+  background-image: url("https://cdn.chotot.com/admincentre/zn4pnENC6338xiCSOTCelj80qRlo6o_IlM0ckoEk2tM/preset:raw/plain/131246fab089b93697f4c9b04701c81b-2842184845821107881.jpg"); }
+
+.slider_2 {
+  background-image: url("https://cdn.chotot.com/admincentre/-nTb7IxAFqNV3z8Uc61Zb4IIXZYdozIuZLlZ9bcOayg/preset:raw/plain/e877054f56e9154369b0d11599b3df2e-2846835257025921306.jpg"); }
+
+.slider_3 {
+  background-image: url("https://cdn.chotot.com/admincentre/io-GtFL8wLcKnU7X6yMrfXk00RLrLoBJYUlut8shtyQ/preset:raw/plain/96bcfe1cc4669461c77550934d16ec3b-2840707957964015892.jpg"); }
+
+.slider_4 {
+  background-image: url("https://cdn.chotot.com/admincentre/io-GtFL8wLcKnU7X6yMrfXk00RLrLoBJYUlut8shtyQ/preset:raw/plain/96bcfe1cc4669461c77550934d16ec3b-2840707957964015892.jpg"); }
+
+.slider_5 {
+  background-image: url("https://cdn.chotot.com/admincentre/io-GtFL8wLcKnU7X6yMrfXk00RLrLoBJYUlut8shtyQ/preset:raw/plain/96bcfe1cc4669461c77550934d16ec3b-2840707957964015892.jpg"); }
+
+.cl_ccc {
+  color: #ccc; }
+
+/* COntainer */
+#container {
+  width: var(--width_center);
+  margin: 0 auto; }
+
+.category_container {
+  overflow: hidden;
+  max-height: calc(var(--height_category_item ) * 2 + 54px); }
+
+.content_section_header {
+  font-size: 16px;
+  margin: 16px 4px 8px; }
+
+.section_items .item {
+  padding: 0 20px; }
+
+.category-item {
+  height: var(--height_category_item);
+  margin: 6px 0;
+  padding: 8px 32px; }
+
+.item-img {
+  padding: 5px; }
+
+.category_item-img img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: contain; }
+
+.item_section_content {
+  padding: 10px 0; }
+
+.item_name {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  /* padding: 0 16px; */ }
+
+.News_up_container {
+  max-height: 1594px;
+  overflow: hidden; }
+
+.news_up_section {
+  border-top: 1px solid #f4f4f4; }
+
+.item_news_up {
+  border: 1px solid #f4f4f4; }
+
+a.item_news_up:hover {
+  background-color: #fff !important;
+  box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+  z-index: 10; }
+
+.item_news_up > .item_img {
+  padding: 0 16px; }
+
+.item_cost {
+  color: var(--color_cost); }
+
+.item_timedate {
+  opacity: 0.55; }
+
+/* Xem thêm */
+.see_addition:hover a {
+  background-color: #88c6e2;
+  opacity: 0.85;
+  color: #161515; }
+
+/* Header */
+header {
+  background-color: var(--bgc-orange);
+  height: var(--height-header);
+  padding: 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100; }
+
+.header_top_Container {
+  height: var(--height-header-container);
+  /* margin-bottom: 10px; */ }
+
+.header_top li a {
+  display: block;
+  padding: 4px 8px;
+  text-decoration: none;
+  color: #000; }
+
+.header_container {
+  height: calc(var(--height-header) - var(--height-header-container)); }
+
+.header_container_section.start {
+  width: 20%;
+  /* line-height: calc(var(--height-header) - var(--height-header-container) ); */ }
+
+.header_logo {
+  width: 19%; }
+
+.list {
+  margin-left: 20px;
+  padding: 0 16px; }
+
+.list li {
+  padding: 0 8px; }
+
+.list > li:hover {
+  opacity: 0.8; }
+
+.list li:hover {
+  background-color: #eebb6c;
+  border-radius: 5px; }
+
+.list > li {
+  position: relative; }
+
+.list_all {
+  text-decoration: none !important;
+  line-height: 56px;
+  display: block;
+  padding: 0 8px;
+  color: #000; }
+
+.list .list_c2 {
+  display: none;
+  position: absolute;
+  min-width: 220px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: rgba(57, 57, 63, 0.2) 0px 7px 29px 0px; }
+
+.list:hover > .list_c2 {
+  display: block; }
+
+.list_c2 li a {
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #000; }
+
+.list_c2 .icon_menu {
+  display: inline-block;
+  float: right; }
+
+.list_c2 > li {
+  position: relative; }
+
+.list_c3 {
+  position: absolute;
+  left: 100%;
+  width: 200px;
+  top: 0;
+  display: none; }
+
+.list_c2 > li:hover .list_c3 {
+  display: block;
+  background-color: #fff;
+  opacity: none; }
+
+.icon_menu::after {
+  content: "";
+  display: block;
+  clear: right; }
+
+.header_container_section.middle {
+  width: 50%; }
+
+.search_form {
+  position: relative; }
+
+.search {
+  width: 100%;
+  height: 42px;
+  padding: 8px 76px 8px 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px; }
+
+.search_icon {
+  font-size: 11px;
+  position: absolute;
+  right: 0.3rem;
+  top: 4px;
+  background-color: #eca438;
+  padding: 8px 20px;
+  border-radius: 7px;
+  color: #fff;
+  display: block;
+  text-decoration: none; }
+
+.active-icon {
+  font-size: 16px;
+  font-size: 20px; }
+
+.header_container_section.end {
+  width: 30%;
+  margin-left: 10px; }
+
+.extention a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  padding: 7px; }
+
+.extention a:hover {
+  opacity: 0.55; }
+
+.push_news {
+  text-transform: uppercase;
+  font-size: 16px;
+  background-color: #f09732;
+  border-radius: 5px; }
+
+.push_news a {
+  color: #fff;
+  font-weight: bold; }
+
+.push_news:hover a {
+  background-color: #d48326;
+  border-radius: 5px;
+  opacity: 1; }
+
+@media (min-width: 1200px) {
+  .listProduct_container {
+    max-width: 1000px; } }
