@@ -8,7 +8,7 @@ const productController = {
     getALl: async (req, res, next) => {
         try {
             query =
-                'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ?';
+                'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ? order by tb_product.create_at desc';
             const [data] = await pool.execute(query, ['main', 0]);
 
             return res.status(statusCode.OK).json(data);

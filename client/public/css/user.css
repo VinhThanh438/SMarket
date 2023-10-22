@@ -1,0 +1,119 @@
+body{
+    background-color: #f4f4f4;
+}
+.user_left{
+
+}
+.user_cover_photo{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 170px;
+    top: 0;
+}
+.user_cover_photo > img{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.user_avatar{
+}
+.avatar_img{
+    position: relative;
+
+}
+.avatar_img > img{
+    margin-top: 0 !important;
+}
+.user_photo_upload{
+    color: #000;
+    position: absolute;
+    right: 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    z-index: 1;
+}
+.cover_photo_icon{
+    top: 5px;
+}
+.avatar_icon{
+    bottom: 10px;
+
+}
+.user_photo_upload:hover{
+    font-size: 18px;
+}
+.user_name{
+
+}
+.user_edit{
+
+}
+.user_right{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.user_section_head{
+    position: relative;
+    cursor: pointer;
+}
+.user_section_head::after{
+    content: "";
+    display: block;
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 4px;
+}
+.user_section_head > p{
+    opacity: 0.5;
+}
+.user_section_head:active::after{
+    background-color: orange;
+
+}
+.user_section_head:active > p{
+    opacity: 1;
+}
+.turn_on{
+    /* background-color: orange; */
+    opacity: 1 !important;
+}
+.user_news_main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 0;
+    text-align: center;
+    background: url(https://static.chotot.com/storage/marketplace/login-background.webp) no-repeat;
+    background-size: contain;
+    justify-content: center;
+    min-height: 500px;
+}
+.user_news_content:focus{
+    box-shadow: none;
+}
+.user_extention{
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    padding: 16px;
+}
+.push_news{
+    text-transform: uppercase;
+    font-size: 16px;
+    background-color: #f09732;
+    border-radius: 5px;
+
+}
+.user_news_content:hover{
+    opacity: 0.75;
+    color: #fff;
+
+}
