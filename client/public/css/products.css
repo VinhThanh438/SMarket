@@ -127,7 +127,7 @@
 .user_avt{
     width: 65px;
     height: 65px;
-    background-image: url("https://cdn.chotot.com/uac2/2113272");
+    /* background-image: url("https://cdn.chotot.com/uac2/2113272"); */
     border-radius: 50%;
     background-size: cover;
     margin: 10px;

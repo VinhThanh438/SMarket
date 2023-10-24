@@ -8,7 +8,12 @@ const routes = (app) => {
     router.get('/', productController.getALl);
 
     // get prd by id
-    router.get('/:id', productController.getProductById);
+    router.get('/id=:id', productController.getProductById);
+
+    // get all categories name
+    router.get('/categories', productController.getCategories);
+
+    // get prds by category name
 
     // create new prd
     router.post(

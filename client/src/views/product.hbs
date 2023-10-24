@@ -1,0 +1,172 @@
+<body>
+    <div id="main" class="bg-light margin_header">
+        <div class="container ">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#">Library</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+              </nav>
+              <div class="products_container d-flex">
+                <div class="products_left">
+                    <div class="product_show_main">
+                        <div class="product_item">
+                            <div class="product_img_main" id="main-image" >
+                                <div class="product_next_pre">
+                                    <div class="product_pre product_move"><i class="fa-solid fa-chevron-left"></i></div>
+                                    <div class="product_next product_move"><i class="fa-solid fa-chevron-right"></i></div>
+                                </div>
+                                {{#each data.product.images ~}}
+                                {{#if (eq type "main")}}
+                                <img class="w-100" src="{{image_link}}" alt="">
+                                {{/if}}
+                                {{~/each}}
+                            </div>
+                            <div class="product_img_add_main">
+                                <div class="product_next_pre">
+                                    <div class="product_add_pre product_move"><i class="fa-solid fa-chevron-left"></i></div>
+                                    <div class="product_add_next product_move"><i class="fa-solid fa-chevron-right"></i></div>
+                                </div>
+                                <ul class="product_img_add d-flex">
+                                    {{#each data.product.images ~}}
+                                    <li><img onclick="changeMainImage(main_image,this.src)" class="w-100" src="{{image_link}}" alt=""></li>
+                                    {{~/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{#each data.product.product ~}}
+                        <div class="product_information p-x-16 bg-white">
+                            <div class="product_qt">
+                                <h2 class="product_name font-weight-bold">{{product_name}}</h2>
+                                <div class="product_cost_interactive d-flex justify-content-between align-items-center">
+                                    <p class="product_cost font-weight-bold price">{{price}}</p>
+                                    <div class="product_interactive row">
+                                        <a class="product_share" href="#"> <i class="fa-solid fa-share"></i> Chia sẻ</a>
+                                        <a class="product_share" href="#"> <i class="fa-regular fa-heart"></i> Lưu tin </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product_status m-y-16">
+                                <p>Tình trạng: {{state}}</p>
+                            </div>
+                            <div class="product_up">
+                                <div class="product_time_on m-y-8">
+                                    <i class="fa-regular fa-clock"></i> <span class="formatTime">{{create_at}}</span>
+                                </div>
+                        {{~/each}}
+                                {{#each data.user ~}}
+                                <div class="product_address m-y-8"> <i class="fa-solid fa-location-dot"></i> {{address}}</div>
+                                {{~/each}}
+                                <div class="product_verify m-y-8"> <i class="fa-regular fa-circle-check"></i> Tin đã được kiểm duyệt</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product_container m-y-16 bg-white p-x-16 p-y-16">   
+                        <div class="product_describe font-weight-bold">Mô tả chi tiết</div>
+                        <div class="product_content overflow-hidden" style="height: 180px">
+                            {{#each data.product.product ~}}
+                            <p class="product_detail p-y-8 m-y-8 ">{{description}}</p>
+                            {{~/each}}
+                            {{#each data.user ~}}
+                            <a href="tel:+{{phone_number}}" class="product_contact d-block m-y-8">Nhấn để liên hệ số : {{phone_number}}</a>
+                            {{~/each}}
+                        </div>
+                        <button class="see_more btn btn-light bg-light d-block w-100 p-y-12 outline-none p-x-16"> Xem thêm <i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
+                </div>
+                {{#each data.user ~}}
+                <div class="products_right" >
+                    <div class="right_user bg-white d-flex justify-content-between">
+                        <div class="user_avt">
+                            <img class="rounded-circle" src="{{avatar}}" alt="" style="width: 70px; height: 70px;">
+                        </div>
+                        <div class="user_information w-90">
+                            <div class="user_information_top d-flex justify-content-between align-items-center">
+                                <strong class="user_name">{{user_name}}</strong>
+                                <a href="/user/{{user_id}}" class="user_go_page d-block border-circle">Xem trang <i class="fa-solid fa-chevron-right small"></i></a>
+                            </div>
+                            <div class="user_information_content">
+                                <p class="user_major m-y-8 m-x-8"><i class="fa-solid fa-briefcase"></i> Sinh viên ĐH Công Nghiệp Hà Nội</p>
+                                <p class="user_status m-y-8 m-x-8"> <i class="user_status_icon fa-solid fa-circle small"></i> Đang hoạt động</p>
+                            </div>
+                            <div class="user_evaluate m-x-8 d-flex align-items-center" >
+                                {{#if (eq rate null)}}
+                                    <p>Chưa có đánh giá</p>
+                                {{else}}
+                                <div class="user_evaluate_start m-x-8">
+                                    <img width="13px" src="https://static.chotot.com/storage/marketplace/common/pf_rating_active_icon.svg" alt="" >
+                                    <img width="13px" src="https://static.chotot.com/storage/marketplace/common/pf_rating_active_icon.svg" alt="">
+                                    <img width="13px" src="https://static.chotot.com/storage/marketplace/common/pf_rating_active_icon.svg" alt="">
+                                    <img width="13px" src="https://static.chotot.com/storage/marketplace/common/pf_rating_active_icon.svg" alt="">
+                                    <img width="13px" src="https://static.chotot.com/storage/marketplace/common/pf_rating_half_active_icon.svg" alt="">
+                                </div>
+                                <div class="user_point d-flex">
+                                    <p>4.9/5 </p>
+                                    <a  href="" class="d-block "> (5 đánh giá)</a>
+                                </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right_contact_buy">
+                        <div class="contact_buy_top d-flex justify-content-between">
+                            <div class="contact_buy_title">Liên hệ người bán</div>
+                            <div class="contact_feeback_percent">Phản hồi: 86%</div>
+                        </div>
+                        <div class="contact_suggest_container">
+                            <div class="contact_suggest">
+                                <ul class="list_suggestion">
+                                    <li>Nhà này còn không ạ</li>
+                                    <li>Thời hạn thuê tối đa là bao lâu</li>
+                                    <li>Thời gian thuê tối thiểu là bao lâu</li>
+                                    <li>Có thêm chi phí gì không</li>
+                                    <li>Có thêm chi phí gì không</li>
+                                    <li>Có thêm chi phí gì không</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary btn-block bg-success contact_phone font-weight-bold d-flex justify-content-between">
+                            <p><i class="fa-solid fa-phone"></i> {{phone_number}}</p>
+                            <p class="" style="text-transform: uppercase;">Bấm để hiện số</p>
+                        </button>
+                        <button class="btn btn-block contact_chat font-weight-bold btn-outline-light border-success d-flex justify-content-between">
+                            <p><i class="fa-solid fa-comments" style="font-size: 20px;"></i></p>
+                            <p class="" style="text-transform: uppercase;">Chat với người bán</p>
+                        </button>
+                    </div>
+                </div>
+                {{~/each}}
+              </div>
+        </div>
+    </div> 
+</body>
+
+<script>
+    // Xem thêm nội dung bị che
+    var product_content = document.querySelector(".product_content");
+    var see_more = document.querySelector('.see_more');
+    var size = product_content.clientHeight;
+    see_more.addEventListener('click',function(size){
+        if(product_content.clientHeight === 180){
+            product_content.style.height = '100%';
+            see_more.innerHTML = "Thu nhỏ <i class=\"fa-solid fa-chevron-up\"></i>";
+            size = 1;
+        }else{
+            product_content.style.height = '180px';
+            size = 180;
+            see_more.innerHTML = "Xem thêm <i class=\"fa-solid fa-chevron-down\"></i>";
+        }
+    });
+    // 
+    var pre  = document.querySelector('.product_add_pre');
+    var next = document.querySelector('.product_add_next');
+    var list_img_add = document.querySelector(".product_img_add");
+    var list_img = list_img_add.querySelectorAll('img');
+    var main_image = document.querySelector('#main-image > img');
+    function changeMainImage(main_image,newImageUrl) {
+        // var newImageUrl = `${newImageUrl}.jpg`
+        main_image.setAttribute("src", newImageUrl);
+    }
+    var cnt = 0;
+    </script>

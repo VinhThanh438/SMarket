@@ -28,11 +28,17 @@
     <link rel="stylesheet" href="/css/chung.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/products.css" />
+    <link rel="stylesheet" href="/css/user.css" />
 </head>
 <body>
-    {{> header/header}}
+    {{> header}}
     {{{body}}}
-    {{> footer/footer}}
+    {{> footer}}
+    <script>
+      const $ = (className) => document.getElementsByClassName(className)
+    </script>
+
     <script>
         const formatMoney = () => {
             const vndElements = document.getElementsByClassName("price");
@@ -44,6 +50,44 @@
         }
 
         formatMoney()
+    </script>
+
+    <script>
+      const time = $('formatTime')
+      console.log(time[0].textContent)
+
+      const formatTimeSince = (timestamp) => {
+        const now = new Date();
+        const productTime = new Date(timestamp);
+        const timeDifference = now - productTime;
+
+        const seconds = Math.floor(timeDifference / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+        const years = Math.floor(months / 12);
+
+        if (years > 0) {
+            return `${years} năm trước`;
+        } else if (months > 0) {
+            return `${months} tháng trước`;
+        } else if (days > 0) {
+            return `${days} ngày trước`;
+        } else if (hours > 0) {
+            return `${hours} giờ trước`;
+        } else if (minutes > 0) {
+            return `${minutes} phút trước`;
+        } else {
+            return `${seconds} giây trước`;
+        }
+      }
+
+      // Sử dụng hàm formatTimeSince với thời gian sản phẩm
+      const productTimestamp = "2023-10-23 11:47:39"; // Định dạng thời gian trong MySQL
+      for (let i = 0; i < time.length; i++) {
+        time[i].innerText = formatTimeSince(time[i].textContent);
+      }
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

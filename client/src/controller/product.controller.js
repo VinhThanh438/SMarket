@@ -8,14 +8,41 @@ require('dotenv').config();
 const productController = {
     getAll: async (req, res, next) => {
         try {
-            const getData = await axios.get(
-                `${process.env.SERVER_DOMAIN}/product`,
-                {
-                    withCredentials: true,
-                }
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product`
             );
 
-            return res.render('home', { data: getData.data });
+            const categoryData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/categories`
+            );
+
+            const data = {
+                productData: productData.data,
+                categoryData: categoryData.data,
+            };
+
+            return res.render('home', { data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    getProductById: async (req, res, next) => {
+        try {
+            const productId = req.params.productId;
+            const userId = req.params.userId;
+
+            const getUser = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${userId}`
+            );
+
+            const getProduct = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/id=${productId}`
+            );
+
+            const data = { product: getProduct.data, user: getUser.data };
+
+            return res.render('product', { data: data });
         } catch (err) {
             next(new appError(err));
         }

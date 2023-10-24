@@ -1,0 +1,31 @@
+<!-- Tin mới  -->
+          <div class="News_up">
+            <h2 class="News_up-header content_section_header font-weight-bold ">Tin đăng mới</h2> 
+            <div class="News_up_container m-yt-16">
+              <div class="section_items news_up_section d-flex flex-lg-wrap ">
+                {{#each data.productData ~}}
+                <a class="d-block item item_news_up w-20 p-yt-16 bg-light" href="/userId={{user_id}}/productId={{product_id}}" title="{{product_name}}">
+                    <div class="item_img ">
+                      <img class="w-100" src="{{image_link}}" alt="">
+                    </div>
+                    <div class="item_section_content ">
+                      <div class="item_content_header m-yb-16  d-flex justify-content-between">
+                        <div class="item_name " title="">{{product_name}}</div>
+                        <div class="item_add ">
+                          <i class=" font-weight-bold fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                      </div>
+                      <div class="item_content_main m-y-16">
+                        <p class="item_cost m-y-8 font-weight-bold price">{{price}}</p>
+                        <p class="item_timedate small m-y-8">
+                          <span class="middle"><i class="fa-solid fa-bag-shopping"></i></span>
+                          <span class="formatTime">{{create_at}}</span>
+                          <span class="small"><i class="fa-solid fa-circle"></i></span>
+                        </p>
+                      </div>
+                    </div>
+                </a>
+                {{~/each}} 
+              </div>
+            </div>
+          </div>
