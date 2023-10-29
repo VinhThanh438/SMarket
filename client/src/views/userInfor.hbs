@@ -16,12 +16,12 @@
                         <!-- Ảnh bìa -->
                           <div class="user_cover_photo" style="height: 170px;">  <!-- Chiều cao của ảnh bìa-->
                             <img class="" src="/imgs/bg-01.jpg" alt="">
-                            <div class="user_upload"> 
+                            {{!-- <div class="user_upload"> 
                                   <label for="uploadCover" class="user_photo_upload cover_photo_icon"><i class="fa-solid fa-camera"></i></label>
                                   <input type="file" name="" id="uploadCover" style="display: none;">
-                              </div>
+                            </div> --}}
                           </div>
-                        {{#each data ~}}
+                        {{#each data.user ~}}
                         <div class="rounded-top text-white d-flex flex-row" style="height:170px;position: relative;"> <!-- Chiều cao phải bằng chiều cao của ảnh bìa-->
                           <!-- Ảnh đại diện -->
                             <div class="user_avatar ms-4 mt-5 d-flex flex-column" style="min-width: 150px; margin-left: 2px;">
@@ -29,10 +29,10 @@
                                 <img src="{{avatar}}"
                                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                 style="width: 150px; z-index: 1">
-                                <div class="user_upload">
+                                {{!-- <div class="user_upload">
                                     <label for="uploadAvatar" class="user_photo_upload avatar_icon"><i class="fa-solid fa-camera"></i></label>
                                     <input type="file" name="" id="uploadAvatar" style="display: none;">
-                                </div>
+                                </div> --}}
                             </div>
                           </div>
                           <!--  -->
@@ -41,11 +41,11 @@
                             <!-- <p>New York</p> -->
                           </div>
                         </div>
-                        <div class="text-black d-flex align-items-center justify-content-between" style="background-color: #f8f9fa;padding: 24px 8px 36px 2px;">
-                            <a href="" class="user_edit btn btn-outline-dark" data-mdb-ripple-color="dark"
+                        <div class="text-black d-flex align-items-center justify-content-between" style="background-color: #f8f9fa; padding: 0 8px 36px 2px;">
+                          {{!-- <a href="" class="user_edit btn btn-outline-dark" data-mdb-ripple-color="dark"
                             style="z-index: 1;">
                             Chỉnh sửa thông tin
-                          </a>
+                          </a> --}}
                           {{!-- <div class="d-flex justify-content-end text-center py-1">
                             <div class="px-3">
                               <p class="mb-1 h5">0</p>
@@ -78,7 +78,7 @@
                             </div>
                           </div>
                         {{~/each}}
-                          <!-- <div class="recent_photos">
+                          {{!-- <div class="recent_photos">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <p class="lead fw-normal mb-0">Ảnh đã đăng</p>
                                 <p class="mb-0"><a href="#!" class="text-muted">Hiển thị tất cả</a></p>
@@ -103,7 +103,7 @@
                                     alt="image 1" class="w-100 rounded-3">
                                 </div>
                               </div>
-                          </div> -->
+                          </div> --}}
                         </div>
                       </div>
                     </div>
@@ -122,11 +122,32 @@
                 </div>
             </div>
             <div class="user_news_main show_content d-none">
-                <a class="user_news_content btn border-none outline-none  user_extention push_news font-weight-bold" href="#">Đăng tin ngay</a>
+                
             </div>
-            {{!-- {{> productsListHome}} --}}
+
             <div class="user_news_main sale_content  ">
-                <a class="user_news_content btn border-none outline-none  user_extention push_news font-weight-bold" href="#">Không có sản phẩm nào</a>
+                {{!-- <a class="user_news_content btn border-none outline-none  user_extention push_news font-weight-bold" href="#">Không có sản phẩm nào</a> --}}
+                {{#each data.product ~}}
+                <a class="d-block item item_news_up w-25 bg-light" style="height: 280px; padding: 4px; margin: 4px 0;"
+                href="/userId={{user_id}}/productId={{product_id}}" title="{{product_name}}">
+                  <div class="item_img ">
+                    <img class="w-100" src="{{image_link}}" style="margin-top: 10px;">
+                  </div>
+                  <div class="item_section_content ">
+                    <div class="item_content_header m-yb-16  d-flex justify-content-between">
+                      <div class="item_name " title="">{{product_name}}</div>
+                    </div>
+                    <div class="item_content_main m-y-16">
+                      <p class="item_cost m-y-8 font-weight-bold price">{{price}}</p>
+                      <p class="item_timedate small m-y-8  ">
+                        <span class="middle"><i class="fa-solid fa-bag-shopping"></i></span> 
+                        <span class="formatTime">{{create_at}}</span>
+                        <span class="small"><i class="fa-solid fa-circle"></i></span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                {{~/each}}
             </div>
         </section>
     </div>

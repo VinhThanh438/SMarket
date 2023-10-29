@@ -70,6 +70,22 @@ const productController = {
         }
     },
 
+    // get product by user
+    getProductByUser: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+
+            query =
+                'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.user_id = ? order by tb_product.create_at desc';
+
+            const [data] = await pool.execute(query, ['main', 0, userId]);
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     // add images of products
     addImages: async (req, res, next, productId) => {
         try {

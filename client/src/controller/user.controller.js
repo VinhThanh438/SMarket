@@ -14,7 +14,16 @@ const userController = {
                 `${process.env.SERVER_DOMAIN}/user/id=${id}`
             );
 
-            return res.render('userInfor', { data: userData.data });
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/user=${id}`
+            );
+
+            const data = {
+                user: userData.data,
+                product: productData.data,
+            };
+
+            return res.render('userInfor', { data: data });
         } catch (err) {
             next(new appError(err));
         }
