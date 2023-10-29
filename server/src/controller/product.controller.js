@@ -7,8 +7,8 @@ const productController = {
     // get all products
     getALl: async (req, res, next) => {
         try {
+            // truy vấn chưa có lấy ra tên danh mục
             query =
-                // truy vấn chưa có lấy ra tên danh mục
                 'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ? order by tb_product.create_at desc';
             const [data] = await pool.execute(query, ['main', 0]);
 
@@ -53,6 +53,23 @@ const productController = {
         }
     },
 
+    // get product by category
+    getProductsByCategory: async (req, res, next) => {
+        try {
+            const categoryId = req.params.id;
+
+            // get product information
+            query =
+                'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.category_id = ? order by tb_product.create_at desc';
+
+            const [data] = await pool.execute(query, ['main', 0, categoryId]);
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     // add images of products
     addImages: async (req, res, next, productId) => {
         try {
@@ -79,14 +96,8 @@ const productController = {
         try {
             query =
                 'insert into tb_product (user_id, category_id, product_name, price, description) values(?, ?, ?, ?, ?)';
-            const {
-                user_id,
-                category_id,
-                product_name,
-                product_type,
-                price,
-                description,
-            } = req.body;
+            const { user_id, category_id, product_name, price, description } =
+                req.body;
 
             // check uploaded images
             const files = req.files;
@@ -162,11 +173,14 @@ const productController = {
     // search products
     searchProduct: async (req, res, next) => {
         try {
+            query =
+                'select tb_product.*, tb_product_images.image_link from tb_product inner join tb_product_images on tb_product.product_id = tb_product_images.product_id where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.product_name like ? order by tb_product.create_at desc';
+
             const keyword = req.body.keyword;
-            const query = 'select * from tb_product where product_name like ?';
             const params = `%${keyword}%`;
-            const [data] = await pool.execute(query, [params]);
-            return res.status(statusCode.OK).json(data);
+            const [data] = await pool.execute(query, ['main', 0, params]);
+
+            return res.status(statusCode.OK).json([data]);
         } catch (e) {
             next(new appError(err));
         }

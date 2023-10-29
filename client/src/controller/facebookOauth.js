@@ -7,12 +7,19 @@ const passportFacebook = passport.use(
         {
             clientID: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-            callbackURL: `${process.env.SERVER_DOMAIN}/auth/facebook/callback`,
-            profileFields: ['id', 'displayName', 'photos', 'email'],
+            callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+            profileFields: ['photos', 'profileUrl'],
         },
         async (accessToken, refreshToken, profile, cb) => {
-            console.log(accessToken, refreshToken);
             console.log(profile);
+            console.log(
+                'https://graph.facebook.com/' +
+                    profile.id +
+                    '/picture' +
+                    '?width=200&height=200' +
+                    '&access_token=' +
+                    accessToken
+            );
             return cb(null, profile);
         }
     )

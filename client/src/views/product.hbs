@@ -1,3 +1,19 @@
+<style>
+    .success-message {
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 5px;
+    position: fixed;
+    top: 12%;
+    left: 50%;
+    z-index: 99999999;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+</style>
+
 <body>
     <div id="main" class="bg-light margin_header">
         <div class="container ">
@@ -19,7 +35,7 @@
                                 </div>
                                 {{#each data.product.images ~}}
                                 {{#if (eq type "main")}}
-                                <img class="w-100" src="{{image_link}}" alt="">
+                                <img class="w-100 image-main" src="{{image_link}}" alt="">
                                 {{/if}}
                                 {{~/each}}
                             </div>
@@ -42,8 +58,11 @@
                                 <div class="product_cost_interactive d-flex justify-content-between align-items-center">
                                     <p class="product_cost font-weight-bold price">{{price}}</p>
                                     <div class="product_interactive row">
+                                        <input type="hidden" class="get-id" value="{{product_id}}">
                                         <a class="product_share" href="#"> <i class="fa-solid fa-share"></i> Chia sẻ</a>
-                                        <a class="product_share" href="#"> <i class="fa-regular fa-heart"></i> Lưu tin </a>
+                                        <a class="product_share" onclick="favorite('{{product_id}}', '{{price}}', '{{product_name}}')"> 
+                                            <i class="fa-regular fa-heart favorite-icon"></i> Lưu tin 
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +158,11 @@
                 {{~/each}}
               </div>
         </div>
-    </div> 
+    </div>
+
+    <div id="success-message" class="success-message">
+        <span class="message"></span>
+    </div>
 </body>
 
 <script>
@@ -169,4 +192,98 @@
         main_image.setAttribute("src", newImageUrl);
     }
     var cnt = 0;
-    </script>
+</script>
+
+<script>
+    // Lấy tham chiếu đến phần tử thông báo và nút đóng
+    const successMessage = document.getElementById('success-message');
+    const message = document.querySelector('.message')
+
+    // lấy phần tử chứa product id
+    const productId = document.querySelector('.get-id').value
+
+    // Hiển thị thông báo
+    function showSuccessMessage(text) {
+        message.innerText = text
+        successMessage.style.display = 'block';
+        
+        // nếu là thông báo đã xóa
+        if (text == 'Đã xóa sản phẩm khỏi danh sách yêu thích') {
+            successMessage.style.backgroundColor = 'darkgoldenrod' // màu vàng nâu để thông áo
+        } else successMessage.style.backgroundColor = '#4CAF50' // màu xanh khi tạo mới
+
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 3000)
+    };
+
+    // hàm kiểm tra sản phẩm trong danh sách yêu thích
+    const checkProduct = (idproduct) => {
+        let getStorage = localStorage.getItem('favorite')
+        let check = false
+
+        if (getStorage) {
+            const parseData = JSON.parse(getStorage)
+
+            parseData.map((e) => {
+                if (e.id == idproduct) { // tìm kiếm sản phẩm đã tồn tại theo id product
+                    check = true // trả về true nếu sản phẩm đã có trong danh sách yêu thích
+                }
+            })
+
+            localStorage.setItem('favorite', JSON.stringify(parseData))
+        }
+
+        return check
+    }
+
+    // thay đổi màu nút thêm sản phẩm
+    const changeFavoriteColor = () => {
+        const favoriteIcon = document.querySelector('.favorite-icon')
+
+        // kiểm tra xem sản phẩm đã được thêm hay chưa
+        if (checkProduct(productId)) {
+            favoriteIcon.style.color = 'red' // đổi màu icon trái tim để xác nhận đã thêm sản phẩm vào danh sách yêu thích
+        } else {
+            favoriteIcon.style.color = 'black' // check = true => sản phẩm chưa được thêm 
+        } 
+    }
+
+    const favorite = (idproduct, priceproduct, nameproduct) => {
+        let store = []
+
+        const image = document.getElementsByClassName('image-main');
+        const imageLink = image[0].getAttribute('src'); // lấy đường dẫn ảnh từ thuộc tính src của thẻ img
+        const getStorage = localStorage.getItem('favorite') // lấy danh sách yêu thích được lưu trong local storage
+
+        if (getStorage) store = JSON.parse(getStorage); // lưu dữ liệu trong danh sách vào store dưới dạng json
+
+        store.push({ // thêm dữ liệu mới vào
+            id: idproduct,
+            name: nameproduct,
+            price: parseInt(priceproduct),
+            image: imageLink,
+        })
+
+        // kiểm tra xem sản phẩm đã được thêm vào danh sách yêu thích hay chưa
+        if (!checkProduct(idproduct)) { // nếu chưa sẽ thêm sản phẩm vào
+            localStorage.setItem('favorite', JSON.stringify(store))
+            changeFavoriteColor()
+            showSuccessMessage('Sản phẩm đã được thêm vào danh sách yêu thích'); // hiển thị thông báo thêm sản phẩm thành công
+        } else { // điều kiện này chỉ xảy ra khi user muốn bỏ sản  phẩm khỏi danh sách yêu thích
+
+            for (let i = 0; i < store.length; i++) { // tìm sản phẩm đã tồn tại tron local storage và xóa nó
+                if (store[i].id == idproduct) {
+                    store.splice(i, 1)
+                    i--
+                }
+            }
+
+            localStorage.setItem('favorite', JSON.stringify(store))
+            changeFavoriteColor()
+            showSuccessMessage('Đã xóa sản phẩm khỏi danh sách yêu thích')
+        }
+    }
+
+    window.addEventListener('load', changeFavoriteColor())
+</script>
