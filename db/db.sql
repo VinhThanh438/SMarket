@@ -113,9 +113,36 @@ create table tb_order (
     constraint fk_order_p foreign key (product_id) references tb_product(product_id)
 );
 
+
 alter table tb_order
 alter column state set default "đang xử lý";
 --------------------------------------------------------
+
+-- Table room -----------------------------------------
+create table tb_room (
+	room_id int auto_increment not null,
+    room_name varchar(50) not null,
+    sender_id int not null,
+    receiver_id int not null,
+    created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    constraint pk_room_id primary key (room_id),
+    constraint fk_sender_id foreign key (sender_id) references tb_user(user_id),
+    constraint fk_receiver_id foreign key (receiver_id) references tb_user(user_id)
+);
+
+-- Table message -----------------------------------------
+create table tb_message (
+	message_id int auto_increment not null,
+    content text not null,
+    room_id int not null,
+    sender_id int not null,
+    -- latest_message is the latest message in a room.
+    -- is_latest_message boolean default false,
+    created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    constraint pk_message_id primary key (message_id),
+    constraint fk_chat_id foreign key (room_id) references tb_room(room_id),
+    constraint fk_sender_id foreign key (sender_id) references tb_user(user_id)
+);
 
 -- Insert new data -------------------------------------
 insert into tb_user (user_name, provider, avatar, phone_number, address) values ("vinh thanh", "google", 
