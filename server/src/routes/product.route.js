@@ -14,6 +14,10 @@ const routes = (app) => {
     router.get('/categories', productController.getCategories);
 
     // get prds by category name
+    router.get('/category=:id', productController.getProductsByCategory);
+
+    // find products by keyword
+    router.post('/search', productController.searchProduct);
 
     // create new prd
     router.post(

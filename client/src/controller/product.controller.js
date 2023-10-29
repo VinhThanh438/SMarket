@@ -47,6 +47,53 @@ const productController = {
             next(new appError(err));
         }
     },
+
+    getProductsByCategory: async (req, res, next) => {
+        try {
+            const categoryId = req.params.id;
+
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/category=${categoryId}`
+            );
+
+            const categoryData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/categories`
+            );
+
+            const data = {
+                productData: productData.data,
+                categoryData: categoryData.data,
+            };
+
+            return res.render('home', { data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    searchProduct: async (req, res, next) => {
+        try {
+            const getData = await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/search`,
+                {
+                    keyword: req.body.keyword,
+                }
+            );
+
+            const categoryData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/categories`
+            );
+
+            const data = {
+                productData: getData.data[0],
+                categoryData: categoryData.data,
+            };
+
+            return res.render('home', { data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
 };
 
 module.exports = productController;
