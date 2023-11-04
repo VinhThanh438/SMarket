@@ -1,3 +1,23 @@
+<style>
+  .form-user {
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: #fff;
+    padding: 30px 30px 60px 30px;
+    width: 240px;
+    border-radius: 8px;
+    position: absolute;
+    top: 94px;
+    right: 86px;
+    display: none;
+}
+
+.show {
+  display: flex;
+}
+</style>
+
 <!-- Header -->
 <header class="color">
     <div class="header_top_Container d-flex justify-content-between">
@@ -25,64 +45,55 @@
         </a>
         <ul class="list list-unstyled">
           <li>
-            <a class="list_all" href=""
-              ><i class="fa-solid fa-bars"></i> Danh mục
-              <i class="ti-angle-down"></i
-            ></a>
+            <a class="list_all">
+              <i class="fa-solid fa-bars"></i> Danh mục
+              <i class="ti-angle-down"></i>
+            </a>
           </li>
           <ul class="list_c2">
             <li>
-              <a href="">Xe cộ <span class="icon_menu"><i class="fa-solid fa-angle-right"></i></span></a>
+              <a href="/category=1000">Xe cộ
+                <span class="icon_menu"><i class="fa-solid fa-angle-right"></i></span>
+              </a>
               <ul class="list_c3 bg-white">
-                <li><a href="">Xe máy</a></li>
-                <li><a href="">Xe đạp</a></li>
-                <li><a href="">ô tô</a></li>
+                <li><a href="/category=1001">Xe máy </a></li>
+                <li><a href="/category=1002">Xe đạp </a></li>
               </ul>
             </li>
             <li>
-              <a href=""
-                >Đồ điện tử
-                <span class="icon_menu"
-                  ><i class="fa-solid fa-angle-right"></i></span
-              ></a>
+              <a href="/category/=1003">
+                Đồ điện tử
+                <span class="icon_menu">
+                  <i class="fa-solid fa-angle-right"></i>
+                </span>
+              </a>
               <ul class="list_c3 bg-white">
-                <li><a href="">Điện thoại, laptop</a></li>
-                <li><a href="">Phụ kiện điện tử</a></li>
-                {{!-- <li><a href="">Dự án</a></li> --}}
+                <li><a href="/category=1004">Điện thoại, Laptop </a></li>
+                <li><a href="/category=1005">Phụ kiện điện tử </a></li>
               </ul>
             </li>
             <li>
-              <a href=""
-                >Đồ trang trí
-                <span class="icon_menu"
-                  ><i class="fa-solid fa-angle-right"></i></span
-              ></a>
+              <a href="/category=1006">
+                Đồ dùng học tập
+                <span class="icon_menu"><i class="fa-solid fa-angle-right"></i></span>
+              </a>
+              <ul class="list_c3 bg-white">
+                <li><a href="/category=1007">Bàn, ghế </a></li>
+                <li><a href="/category=1008">Đèn học </a></li>
+              </ul>
             </li>
-            <li>
-              <a href=""
-                >Đồ dùng học tập
-                <span class="icon_menu"
-                  ><i class="fa-solid fa-angle-right"></i></span
-              ></a>
-            </li>
-            <li><a href="">Quần, áo</a></li>
-            <li><a href="">Đồ gia dụng</a></li>
-            <li><a href="">Nhà trọ</a></li>
+            <li><a href="/category=1009">Đồ gia dụng</a></li>
+            <li><a href="/category=1010">Đồ trang trí </a></li>
+            <li><a href="/category=1011">Thời trang </a></li>
           </ul>
         </ul>
       </div>
       <div class="header_container_section middle">
-        <form class="search_form" action="">
-          <input
-            class="search"
-            type="search"
-            name=""
-            id=""
-            placeholder="Tìm kiếm sản phẩm"
-          />
-          <a href="" class="search_icon"
-            ><i class="fa-solid fa-magnifying-glass"></i
-          ></a>
+        <form class="search_form" action="/search" method="post">
+          <input class="search" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm"/>
+          <button type="submit" class="search_icon" style="border: none;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </form>
       </div>
       <ul
@@ -102,11 +113,15 @@
             ><i class="active-icon fa-solid fa-comment"></i> Tin nhắn</a
           >
         </li>
-        <li class="extention">
-          <a href=""
-            ><i class="active-icon fa-solid fa-user"></i> Tài khoản
-            <i class="ti-angle-down"></i
-          ></a>
+        <li class="extention acc">
+          <a onclick="openSubMenu()">
+            <i class="active-icon fa-solid fa-user acc-name"></i> Tài khoản
+            <form class="form form-user">
+              <a href="/user/" class="btn btn-info" style="margin-bottom: 18px; color:white;">Xem thông tin tài khoản</a>
+              <a href="/user/logout" class="btn btn-info" style="color: white;">Đăng xuất</a>
+            </form>
+            {{!-- <i class="ti-angle-down"></i --}}
+          </a>
         </li>
         <li class="extention push_news">
           <a href=""><i class="fa-regular fa-pen-to-square"></i> Đăng tin</a>
@@ -198,8 +213,6 @@ right: 5%;">
     var close = modal_chat.querySelector('.fas.fa-times')
     var modal_chat_body = modal_chat.querySelector('.modal_chat_body');
     var modal_chat_short = modal_chat.querySelector('.modal_chat_short');
-    console.log(down);
-    console.log(close);
     close.onclick = function(){
       modal_chat.style.display='none';
     }
@@ -214,4 +227,34 @@ right: 5%;">
       modal_chat_short.classList.add('show_off');
 
     }
-  </script>
+</script>
+
+{{!-- check account --}}
+<script>
+  const checkLogin = () => {
+  const cookie = document.cookie;
+
+  const arrToken = cookie.split(' ');
+  let cookies = {};
+
+  arrToken.map((e) => {
+    let sub = e.trim().split('=');
+    cookies[sub[0]] = sub[1];
+  });
+
+  const acc = document.querySelector('.acc')
+  if (cookies.accessToken) {
+    acc.innerHTML = '<a onclick="openSubMenu()"><i class="active-icon fa-solid fa-user acc-name"></i> Tài khoản <form class="form form-user"><a href="/seller" class="btn btn-info" style="margin-bottom: 18px; color:white;">Xem thông tin tài khoản</a><a href="/logout" class="btn btn-info" style="color: white;">Đăng xuất</a></form></a>'
+  } else {
+    acc.innerHTML = '<a href="/login"><i class="active-icon fa-solid fa-user acc-name"></i> Tài khoản</a>'
+  }
+}  
+checkLogin()
+</script>
+
+<script>
+  const openSubMenu = () => {
+    const subMenu = document.querySelector('.form-user')
+    subMenu.classList.toggle('show')
+  }
+</script>

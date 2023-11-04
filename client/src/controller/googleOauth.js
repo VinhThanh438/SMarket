@@ -13,18 +13,18 @@ const passportGoogle = passport.use(
         },
         (accessToken, refreshToken, profile, done) => {
             const user = {
-                name: profile._json.name,
+                username: profile._json.name,
                 email: profile._json.email,
                 avatar: profile._json.picture,
+                provider: profile.provider,
             };
-
             accessToken = token.accessToken(user);
             refreshToken = token.refreshToken(user);
 
-            profile.accessToken = accessToken;
-            profile.refreshToken = refreshToken;
+            user.accessToken = accessToken;
+            user.refreshToken = refreshToken;
 
-            done(null, profile);
+            done(null, user);
         }
     )
 );

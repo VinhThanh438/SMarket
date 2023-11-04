@@ -20,35 +20,120 @@ const userController = {
         }
     },
 
-    createUser: (req, res, next) => {
+    createUser: async (req, res, next) => {
         try {
+            console.log(req.body);
+            const { username, password, provider, phonenumber, avatar } =
+                req.body;
+
+            // create data by local method
+            if (!provider) {
+                query =
+                    'insert into tb_user (user_name, user_password, provider, phone_number) values (?, ?, ?, ?)';
+                // hash password
+                const salt = await bcrypt.genSalt(10);
+                const hashed = await bcrypt.hash(password, salt);
+
+                const [data] = await pool.execute(query, [
+                    username,
+                    hashed,
+                    '',
+                    phonenumber,
+                ]);
+
+                // login
+                query =
+                    'select * from tb_user where user_id = ? and is_deleted = ?';
+
+                // query user data
+                const [logInData] = await pool.execute(query, [
+                    data.insertId,
+                    0,
+                ]);
+
+                // create token and add to cookie
+                const accessToken = token.accessToken(logInData[0]);
+                const refreshToken = token.refreshToken(logInData[0]);
+
+                return res.status(statusCode.CREATED).json({
+                    data: {
+                        data,
+                        accessToken,
+                        refreshToken,
+                    },
+                });
+            }
+
+            // check existed account
             query =
-                'insert into tb_user (user_name, oauth, avatar, phone_number, address)';
-        } catch (err) {}
+                'select * from tb_user where user_name = ? and provider = ? and is_deleted = ?';
+
+            const [data] = await pool.execute(query, [username, provider, 0]);
+
+            // create account by oauth
+            if (data.length === 0) {
+                query =
+                    'insert into tb_user (user_name, provider, avatar) values (?, ?, ?)';
+
+                const [dataInserted] = await pool.execute(query, [
+                    username,
+                    provider,
+                    avatar,
+                ]);
+
+                // get user data
+                query = 'select * from tb_user where user_id = ?';
+
+                const [getData] = await pool.execute(query, [
+                    dataInserted.insertId,
+                ]);
+
+                // create token and add to cookie
+                const accessToken = token.accessToken(getData[0]);
+                const refreshToken = token.refreshToken(getData[0]);
+
+                return res.status(statusCode.CREATED).json({
+                    data: {
+                        dataInserted,
+                        accessToken,
+                        refreshToken,
+                    },
+                });
+            }
+
+            // create token and add to cookie
+            const accessToken = token.accessToken(data[0]);
+            const refreshToken = token.refreshToken(data[0]);
+
+            return res.status(statusCode.OK).json({
+                data: {
+                    accessToken,
+                    refreshToken,
+                },
+            });
+        } catch (err) {
+            next(new appError(err));
+        }
     },
 
     logIn: async (req, res, next) => {
         try {
-            query =
-                'select iduser, email, role, password, avatar, sdt, nameuser from tb_user where email = ?';
-            const { email, password, verified } = req.body;
-
-            // query user data
-            const [data] = await pool.execute(query, [email]);
-            if (data.length === 0) {
-                return res
-                    .status(statusCode.UNAUTHORIZED)
-                    .json({ message: 'user not found' });
-            }
-
-            // select give code
-            query = 'select givecode, state from promote where iduser = ?';
-            const [giveCode] = await pool.execute(query, [data[0].iduser]);
-            data[0].code = giveCode[0].givecode;
-            data[0].state = giveCode[0].state;
+            const { username, password, provider } = req.body;
+            let getData;
 
             // compare password
-            if (!verified) {
+            if (!provider) {
+                query =
+                    'select * from tb_user where user_name = ? and is_deleted = ?';
+                // query user data
+                const [data] = await pool.execute(query, [username, 0]);
+
+                if (data.length === 0) {
+                    return res
+                        .status(statusCode.UNAUTHORIZED)
+                        .json({ message: 'user not found' });
+                }
+
                 bcrypt.compare(password, data[0].password, (err, result) => {
                     if (err)
                         return next(new appError(statusCode.BAD_REQUEST, err));
@@ -60,25 +145,40 @@ const userController = {
                             )
                         );
                 });
+
+                getData = data[0];
+            } else {
+                query =
+                    'select * from tb_user where user_name = ? and provider = ? and is_deleted = ?';
+
+                const [data] = await pool.execute(query, [
+                    username,
+                    provider,
+                    0,
+                ]);
+
+                if (data.length === 0) {
+                    return res
+                        .status(statusCode.UNAUTHORIZED)
+                        .json({ message: 'user not found' });
+                }
+
+                getData = data[0];
             }
 
             // create token and add to cookie
-            const accessToken = token.accessToken(data[0]);
-            const refreshToken = token.refreshToken(data[0]);
+            const accessToken = token.accessToken(getData);
+            const refreshToken = token.refreshToken(getData);
 
             // create cookie
             res.cookie('accessToken', accessToken, cookieOption);
             res.cookie('refreshToken', refreshToken, cookieOption);
 
-            // if (verified) return { accessToken, refreshToken };
-
-            return res
-                .status(statusCode.OK)
-                .json({
-                    message: 'loggin successfully',
-                    accessToken,
-                    refreshToken,
-                });
+            return res.status(statusCode.OK).json({
+                message: 'loggin successfully',
+                accessToken,
+                refreshToken,
+            });
         } catch (err) {
             next(new appError(err));
         }
