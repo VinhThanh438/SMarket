@@ -3,63 +3,68 @@
       <div class="row d-flex justify-content-center align-items-center h-100">
          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card shadow-2-strong" style="border-radius: 1rem">
-               <div class="card-body p-5 text-center">
-                  <h3 class="mb-3" style="font-size: 24px;">Đăng ký</h3>
-                  <div class="form-outline">
-                     <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeName-2">Họ và tên </label>
-                     <input
-                        type="email"
-                        id="typeName-2"
-                        class="form-control form-control-lg"
-                        placeholder="Họ và tên"
-                        />
-                  </div>
-                  <div class="form-outline m-y-8">
-                     <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeEmail-2">Email</label>
-                     <input
-                        type="email"
-                        id="typeEmail-2"
-                        class="form-control form-control-lg"
-                        placeholder="Nhập địa chỉ email"
-                        />
-                  </div>
-                  <div class="form-outlinem-y-8">
-                     <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typePasswordX">Mật khẩu</label>
-                     <input
-                        type="password"
-                        id="typePasswordX"
-                        class="form-control form-control-lg"
-                        placeholder="Mật khẩu"
-                        />
-                  </div>
-                  <div class="form-outline m-y-8">
-                     <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeConfirmPasswordX-2">Xác nhận lại mật khẩu</label>
-                     <input
-                        type="password"
-                        id="typeConfirmPasswordX-2"
-                        class="form-control form-control-lg"
-                        placeholder="Xác nhận lại mật khẩu"
-                        />
-                  </div>
-                  <button
-                     class="btn bg-orange text-white font-weight-bold btn-lg btn-block m-y-8"
-                     type="submit"> Đăng ký
-                  </button>
-                  <div class="login_add">
-                     <div class="m-y-8 opacity-75 d-flex ">
-                        <hr class="w-100" style="color: #8c8c8c;height: 1px;">
-                        <span class="w-100">Tiếp tục bằng</span>
-                        <hr class="w-100" style="color: #8c8c8c;height: 1px;">
+               <form action="/signup" method="post">
+                  <div class="card-body p-5 text-center">
+                     <h3 class="mb-3" style="font-size: 24px;">Đăng ký</h3>
+                     <div class="form-outline">
+                        <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeName-2">Họ và tên </label>
+                        <input
+                           type="text"
+                           id="typeName-2"
+                           class="form-control form-control-lg"
+                           placeholder="Họ và tên"
+                           name="username"
+                           />
                      </div>
-                     <a href="/auth/google" class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39" type="submit">
-                     <i class="fab fa-google me-2"></i> Sign in with google
-                     </a>
-                     <a href="/auth/facebook" class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998" type="submit">
-                     <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
-                     </a>
+                     <div class="form-outline m-y-8">
+                        <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeEmail-2">Số điện thoại</label>
+                        <input
+                           type="number"
+                           id="typeEmail-2"
+                           class="form-control form-control-lg"
+                           placeholder="Nhập số điện thoại"
+                           name="phonenumber"
+                           />
+                     </div>
+                     <div class="form-outlinem-y-8">
+                        <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typePasswordX">Mật khẩu</label>
+                        <input
+                           type="password"
+                           id="typePasswordX"
+                           class="form-control form-control-lg"
+                           placeholder="Mật khẩu"
+                           name="password"
+                           />
+                     </div>
+                     <div class="form-outline m-y-8">
+                        <label class="text-left w-100 m-y-8 m-x-8 font-weight-bold" for="typeConfirmPasswordX-2">Xác nhận lại mật khẩu</label>
+                        <input
+                           type="password"
+                           id="typeConfirmPasswordX-2"
+                           class="form-control form-control-lg"
+                           placeholder="Xác nhận lại mật khẩu"
+                           />
+                     </div>
+                     <button
+                        class="btn bg-orange text-white font-weight-bold btn-lg btn-block m-y-8"
+                        type="submit"> Đăng ký
+                     </button>
+                     <div class="login_add">
+                        <div class="m-y-8 opacity-75 d-flex ">
+                           <hr class="w-100" style="color: #8c8c8c;height: 1px;">
+                           <span class="w-100">Tiếp tục bằng</span>
+                           <hr class="w-100" style="color: #8c8c8c;height: 1px;">
+                        </div>
+                        <a href="/auth/google" class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39" type="submit">
+                        <i class="fab fa-google me-2"></i> Sign in with google
+                        </a>
+                        <a href="/auth/facebook" class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998" type="submit">
+                        <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
+                        </a>
+                     </div>
+                     <div class="signup m-y-16">Đã có tài khoản ? <a href="/login">Đăng nhập</a></div>
                   </div>
-                  <div class="signup m-y-16">Đã có tài khoản ? <a href="/login">Đăng nhập</a></div>
-               </div>
+               </form>
                <!-- <div class="forgot m-y-8"><a href="">Quên mật khẩu</a></div> -->
             </div>
          </div>
