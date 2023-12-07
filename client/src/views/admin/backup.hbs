@@ -1,0 +1,131 @@
+<div id="admin-product">
+    <div class="product-header layout-common">
+        <div>
+            <b>Danh sách sản phẩm đã xóa</b>
+            <span class="badge badge-secondary badge-pill">{{data.length}}</span>
+        </div>
+        <div class="clock"></div>
+    </div>
+
+    <div class="row layout-common">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                              <button class="btn btn-add btn-sm" data-toggle="modal" data-target="#addModal"
+                              aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm mới</button>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-sm delete-all" type="button" title="Xóa"
+                                    data-toggle="modal" data-target="#removePrdsModal" aria-hidden="true">
+                                    <i class="fas fa-trash-alt"></i> Xóa tất cả 
+                                </button>
+                            </div>
+                            <div class="col-sm-2">
+                              {{!-- <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a> --}}
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 30px;">
+                        
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th width="100">Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Ảnh</th>
+                                    <th width="120">Tình trạng</th>
+                                    <th width="120">Giá tiền</th>
+                                    <th width="120">Danh mục</th>
+                                    <th>Chi tiết sản phẩm</th>
+                                    <th width="20">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data.product ~}}
+                                <tr>
+                                    <td width="10"><input type="checkbox" name="checkbox" value="{{product_id}}"></td>
+                                    <td>{{product_id}}</td>
+                                    <td><a href="/userId={{user_id}}/productId={{product_id}}" class="text-secondary">{{product_name}}</a></td>
+                                    <td><img src={{image_link}} alt="" width="80px;"></td>
+                                    <td><span class="badge bg-success">{{state}}</span></td>
+                                    <td class="price">{{price}}</td>
+                                    <td>{{category_name}}</td>
+                                    <td>{{description}}</td>
+                                    <td>
+                                        <button class="btn btn-sm trash" type="button" title="Xóa" data-toggle="modal" data-target="#removeModal"
+                                        aria-hidden="true" onclick="deleteModal({{product_id}}, {{user_id}})"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+                                        data-target="#updateModal"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                                {{~/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.querySelector('.clock').innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+
+        time()
+    </script>
+
+    <script>
+        function formatCurrency(input) {
+            // Xóa tất cả các ký tự không phải số
+            var value = input.value.replace(/\D/g, '');
+            
+            // Kiểm tra xem có hàng nghìn không
+            if (value.length > 3) {
+                // Định dạng số hàng nghìn và hàng triệu (nếu có)
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            // Gán lại giá trị đã định dạng vào trường nhập liệu
+            input.value = value;
+        }
+    </script>
+</div>

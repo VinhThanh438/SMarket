@@ -4,6 +4,8 @@ const productController = require('../controller/product.controller');
 const userController = require('../controller/user.controller');
 const passportGoogle = require('../controller/googleOauth');
 const passportFacebook = require('../controller/facebookOauth');
+const upload = require('../config/multer');
+const multer = require('multer');
 require('dotenv').config();
 
 const routes = (app) => {
@@ -31,6 +33,30 @@ const routes = (app) => {
     router.post('/signup', userController.signUp);
 
     router.get('/logout', userController.logOut);
+
+    // admin
+    router.get('/admin/:id', userController.adminController);
+
+    router.get('/admin/backup/:id', userController.getAdminBackup);
+
+    router.post(
+        '/admin/addproduct',
+        upload.fields([
+            { name: 'image_main', maxCount: 1 },
+            { name: 'image_sub', maxCount: 4 },
+        ]),
+        userController.adminAddProduct
+    );
+
+    router.post(
+        '/admin/delete-selected/user=:userid',
+        userController.adminDeleteSelectedPrds
+    );
+
+    router.get(
+        '/product/delete/id=:id/user=:userid',
+        userController.adminDeleteProduct
+    );
 
     router.get(
         '/seller',

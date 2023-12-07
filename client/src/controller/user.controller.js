@@ -31,6 +31,130 @@ const userController = {
         }
     },
 
+    adminController: async (req, res, next) => {
+        try {
+            const id = req.params.id;
+
+            const userData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${id}`
+            );
+
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/user=${id}`
+            );
+
+            const data = {
+                user: userData.data,
+                product: productData.data,
+            };
+
+            return res.render('admin/product', { layout: 'admin', data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    getAdminBackup: async (req, res, next) => {
+        try {
+            const id = req.params.id;
+
+            const userData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${id}`
+            );
+
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/deleted/user=${id}`
+            );
+
+            const data = {
+                user: userData.data,
+                product: productData.data,
+            };
+
+            return res.render('admin/backup', { layout: 'admin', data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    adminAddProduct: async (req, res, next) => {
+        try {
+            console.log(req.body);
+            const data = new FormData();
+            const image_main_path = req.files.image_main[0].path;
+
+            data.append('user_id', req.body.user_id);
+            data.append('category_id', req.body.category_id);
+            data.append('product_name', req.body.product_name);
+            data.append('price', req.body.price.replace(/\./g, ''));
+            data.append('description', req.body.description);
+            data.append('image_main', fs.createReadStream(image_main_path));
+
+            for (let i = 0; i < req.files.image_sub.length; i++) {
+                const image_sub_path = req.files.image_sub[i].path;
+                data.append('image_sub', fs.createReadStream(image_sub_path));
+            }
+
+            await axios.post(`${process.env.SERVER_DOMAIN}/product`, data, {
+                headers: data.getHeaders(),
+            });
+
+            for (const fieldname in req.files) {
+                const fileArray = req.files[fieldname];
+                fileArray.forEach((file) => {
+                    const filePath = path.join(
+                        __dirname,
+                        `../../${file.destination}`,
+                        file.filename
+                    );
+
+                    fs.unlink(filePath, (err) => {
+                        if (err) {
+                            console.error(
+                                'Đã xảy ra lỗi khi xóa tệp tin:',
+                                err
+                            );
+                        } else {
+                            console.log('Đã xóa tệp tin:', filePath);
+                        }
+                    });
+                });
+            }
+
+            return res.redirect(`/admin/${req.body.user_id}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    adminDeleteProduct: async (req, res, next) => {
+        try {
+            const idproduct = req.params.id;
+            const userid = req.params.userid;
+            await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/delete/${idproduct}`
+            );
+            return res.redirect(`/admin/${userid}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    adminDeleteSelectedPrds: async (req, res, next) => {
+        try {
+            const userid = req.params.userid;
+            const selectedValues = req.body.selectedValues;
+            const toArr = selectedValues.split(',').map(Number);
+            await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/delete-products`,
+                toArr
+            );
+            return res.redirect(`/admin/${userid}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     getSellerInfor: async (req, res, next) => {
         try {
             let userData;

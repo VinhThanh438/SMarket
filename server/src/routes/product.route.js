@@ -35,6 +35,12 @@ const routes = (app) => {
     // remove prd
     router.post('/delete/:id', productController.deleteProduct);
 
+    // remove selected products
+    router.post('/delete-products', productController.deleteSelectedProducts);
+
+    // get deleted prds
+    router.get('/deleted/user=:id', productController.getDeletedPrds);
+
     return app.use('/product', router);
 };
 
