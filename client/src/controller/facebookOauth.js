@@ -11,15 +11,6 @@ const passportFacebook = passport.use(
             profileFields: ['photos', 'profileUrl'],
         },
         async (accessToken, refreshToken, profile, cb) => {
-            console.log(profile);
-            console.log(
-                'https://graph.facebook.com/' +
-                    profile.id +
-                    '/picture' +
-                    '?width=200&height=200' +
-                    '&access_token=' +
-                    accessToken
-            );
             return cb(null, profile);
         }
     )

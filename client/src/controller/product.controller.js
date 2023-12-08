@@ -3,11 +3,16 @@ const appError = require('../error/appError');
 const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const productController = {
     getAll: async (req, res, next) => {
         try {
+            let cookieData;
+            const token = req.cookies.accessToken;
+            if (token) cookieData = jwt.decode(token);
+
             const productData = await axios.get(
                 `${process.env.SERVER_DOMAIN}/product`
             );
@@ -19,6 +24,7 @@ const productController = {
             const data = {
                 productData: productData.data,
                 categoryData: categoryData.data,
+                cookieData: [cookieData],
             };
 
             return res.render('home', { data: data });

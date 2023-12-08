@@ -5,14 +5,14 @@ module.exports.token = {
     accessToken: (data) =>
         jwt.sign(
             {
-                iduser: data.iduser,
-                email: data.email,
-                name: data.nameuser,
-                role: data.role,
-                sdt: data.sdt,
+                user_id: data.user_id,
+                user_name: data.user_name,
+                user_role: data.user_role,
+                phone_number: data.phone_number,
                 avatar: data.avatar,
-                code: data.code,
-                state: data.state,
+                provider: data.provider,
+                create_at: data.create_at,
+                address: data.address,
             },
             process.env.JWT_ACCESS_KEY,
             {
@@ -22,14 +22,14 @@ module.exports.token = {
     refreshToken: (data) =>
         jwt.sign(
             {
-                iduser: data.iduser,
-                email: data.email,
-                name: data.nameuser,
-                role: data.role,
-                sdt: data.sdt,
+                user_id: data.user_id,
+                user_name: data.user_name,
+                user_role: data.user_role,
+                phone_number: data.phone_number,
                 avatar: data.avatar,
-                code: data.code,
-                state: data.state,
+                provider: data.provider,
+                create_at: data.create_at,
+                address: data.address,
             },
             process.env.JWT_REFRESH_KEY,
             {
