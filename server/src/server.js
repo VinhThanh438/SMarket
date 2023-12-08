@@ -45,8 +45,8 @@ app.use(flash());
 
 userRoutes(app);
 productRoutes(app);
-ggRoutes(app);
-fbRoutes(app);
+// ggRoutes(app);
+// fbRoutes(app);
 roomRoutes(app);
 messageRoutes(app);
 allRoutes(app);
