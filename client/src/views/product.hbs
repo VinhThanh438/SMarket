@@ -33,20 +33,22 @@
                                     <div class="product_pre product_move"><i class="fa-solid fa-chevron-left"></i></div>
                                     <div class="product_next product_move"><i class="fa-solid fa-chevron-right"></i></div>
                                 </div>
-                                {{#each data.product.images ~}}
-                                {{#if (eq type "main")}}
-                                <img class="w-100 image-main" src="{{image_link}}" alt="">
-                                {{/if}}
-                                {{~/each}}
+                                <div class="img_container" style="max-width: 612px;">
+                                    {{#each data.product.images ~}}
+                                    {{#if (eq type "main")}}
+                                        <img class="w-100 h-100" style="aspect-ratio: 1/1;object-fit: contain;max-height: 488px;" src="{{image_link}}" alt="">
+                                    {{/if}}
+                                    {{~/each}}
+                                </div>
                             </div>
                             <div class="product_img_add_main">
                                 <div class="product_next_pre">
                                     <div class="product_add_pre product_move"><i class="fa-solid fa-chevron-left"></i></div>
                                     <div class="product_add_next product_move"><i class="fa-solid fa-chevron-right"></i></div>
                                 </div>
-                                <ul class="product_img_add d-flex">
+                                <ul class="product_img_add d-flex" style="height: 103px;">
                                     {{#each data.product.images ~}}
-                                    <li><img onclick="changeMainImage(main_image,this.src)" class="w-100" src="{{image_link}}" alt=""></li>
+                                    <li><img onclick="changeMainImage(main_image,this.src)" class="w-100 h-100" src="{{image_link}}" alt=""></li>
                                     {{~/each}}
                                 </ul>
                             </div>
@@ -91,6 +93,7 @@
                             <a href="tel:+{{phone_number}}" class="product_contact d-block m-y-8">Nhấn để liên hệ số : {{phone_number}}</a>
                             {{~/each}}
                         </div>
+                        {{!-- If else chỗ xem thêm này đi --}}
                         <button class="see_more btn btn-light bg-light d-block w-100 p-y-12 outline-none p-x-16"> Xem thêm <i class="fa-solid fa-chevron-down"></i></button>
                     </div>
                 </div>
