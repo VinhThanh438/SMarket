@@ -37,7 +37,10 @@ const productController = {
             let productId = req.params.id;
 
             // get product information
-            query = 'select * from tb_product where product_id = ?';
+            query =
+                'select tb_product.*, tb_category.* from tb_product' +
+                ' inner join tb_category on tb_product.category_id = tb_category.category_id' +
+                ' where product_id = ?';
             const [product] = await pool.execute(query, [productId]);
 
             // get product images
@@ -46,6 +49,65 @@ const productController = {
 
             // merge image data into product data
             const data = { product: product, images: images };
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // get product by category
+    getProductsByCategory: async (req, res, next) => {
+        try {
+            const categoryId = req.params.id;
+
+            // get product information
+            query =
+                'select tb_product.*, tb_category.*, tb_product_images.image_link from tb_product' +
+                ' inner join tb_product_images on tb_product.product_id = tb_product_images.product_id' +
+                ' inner join tb_category on tb_product.category_id = tb_category.category_id' +
+                ' where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.category_id = ? order by tb_product.create_at desc';
+
+            const [data] = await pool.execute(query, ['main', 0, categoryId]);
+            console.log(data);
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // get product by user
+    getProductByUser: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+
+            query =
+                'select tb_product.*, tb_category.*, tb_product_images.image_link from tb_product' +
+                ' inner join tb_product_images on tb_product.product_id = tb_product_images.product_id' +
+                ' inner join tb_category on tb_product.category_id = tb_category.category_id' +
+                ' where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.user_id = ? order by tb_product.create_at desc';
+
+            const [data] = await pool.execute(query, ['main', 0, userId]);
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // get deleted prds from the user
+    getDeletedPrds: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+
+            query =
+                'select tb_product.*, tb_category.*, tb_product_images.image_link from tb_product' +
+                ' inner join tb_product_images on tb_product.product_id = tb_product_images.product_id' +
+                ' inner join tb_category on tb_product.category_id = tb_category.category_id' +
+                ' where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.user_id = ? order by tb_product.create_at desc';
+
+            const [data] = await pool.execute(query, ['main', 1, userId]);
 
             return res.status(statusCode.OK).json(data);
         } catch (err) {
@@ -154,6 +216,22 @@ const productController = {
             await pool.execute(query, [1, productId]);
 
             return res.status(statusCode.OK).json('product deleted');
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // delete selected products
+    deleteSelectedProducts: async (req, res, next) => {
+        try {
+            const selectdId = req.body;
+            query = `update tb_product set is_deleted = ? where product_id IN (${selectdId.join(
+                ','
+            )})`;
+
+            const result = await pool.execute(query, [1]);
+
+            return res.status(statusCode.OK).json(result);
         } catch (err) {
             next(new appError(err));
         }
