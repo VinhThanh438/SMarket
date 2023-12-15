@@ -14,13 +14,6 @@ const routes = (app) => {
     router.get('/categories', productController.getCategories);
 
     // get prds by category name
-    router.get('/category=:id', productController.getProductsByCategory);
-
-    // get prds by user id
-    router.get('/user=:id', productController.getProductByUser);
-
-    // find prds by keyword
-    router.post('/search', productController.searchProduct);
 
     // create new prd
     router.post(
@@ -34,6 +27,12 @@ const routes = (app) => {
 
     // remove prd
     router.post('/delete/:id', productController.deleteProduct);
+
+    // remove selected products
+    router.post('/delete-products', productController.deleteSelectedProducts);
+
+    // get deleted prds
+    router.get('/deleted/user=:id', productController.getDeletedPrds);
 
     return app.use('/product', router);
 };
