@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/products.css" />
     <link rel="stylesheet" href="/css/user.css" />
-    <link rel="stylesheet" href="/css/chat.css" />
 </head>
 <body>
     {{> header}}
@@ -55,6 +54,7 @@
 
     <script>
       const time = $('formatTime')
+      console.log(time[0].textContent)
 
       const formatTimeSince = (timestamp) => {
         const now = new Date();

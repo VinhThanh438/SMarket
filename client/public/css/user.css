@@ -87,11 +87,13 @@ body{
 }
 .user_news_main{
     display: flex;
-    flex-wrap: wrap;
-    padding: 40px 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 0;
     text-align: center;
     background: url(https://static.chotot.com/storage/marketplace/login-background.webp) no-repeat;
     background-size: contain;
+    justify-content: center;
     min-height: 500px;
 }
 .user_news_content:focus{

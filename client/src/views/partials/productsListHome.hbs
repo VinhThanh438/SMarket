@@ -3,7 +3,6 @@
             <h2 class="News_up-header content_section_header font-weight-bold ">Tin đăng mới</h2> 
             <div class="News_up_container m-yt-16">
               <div class="section_items news_up_section d-flex flex-lg-wrap ">
-                {{#if data.productData}}
                 {{#each data.productData ~}}
                 <a class="d-block item item_news_up w-20 p-yt-16 bg-light" href="/userId={{user_id}}/productId={{product_id}}" title="{{product_name}}">
                     <div class="item_img ">
@@ -27,9 +26,6 @@
                     </div>
                 </a>
                 {{~/each}} 
-                {{else}}
-                {{> resultNotFound}}
-                {{/if}}
               </div>
             </div>
           </div>
