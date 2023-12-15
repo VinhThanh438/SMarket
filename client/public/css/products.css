@@ -1,7 +1,8 @@
 
 
 .products_left{
-    width: 60%;
+    width: 55%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .product_show_main{
@@ -60,7 +61,10 @@
     flex: 1 0 20%;
     cursor: pointer;
 }
-
+.product_img_add li img{
+    aspect-ratio: 3/2;
+    object-fit: contain;
+}
 .product_information{
 
 }
