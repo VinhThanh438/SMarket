@@ -13,8 +13,8 @@
                     <div class="tile-body">
                         <div class="row element-button">
                             <div class="col-sm-2">
-                              <button class="btn btn-add btn-sm" data-toggle="modal" data-target="#addModal"
-                              aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm mới</button>
+                              <button class="btn btn-add btn-sm text-bold" data-toggle="modal" data-target="#addModal"
+                              aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm</button>
                             </div>
                             <div class="col-sm-2">
                                 <button class="btn btn-sm delete-all" type="button" title="Xóa"
@@ -98,21 +98,24 @@
                             {{~/each}}
                         </div>
 
-                            <div class="col-md-4">
-                                <select name="category_id" class="form-select" aria-label="Default select example">
-                                <option selected>Danh muc</option>
-                                <option value="1000">xe cộ</option>
-                                <option value="1001">xe máy</option>
-                                <option value="1002">xe đạp</option>
-                                <option value="1003">Đồ điện tử</option>
-                                <option value="1004">Điện thoại, laptop</option>
-                                <option value="1005">Phụ kiện điện tử</option>
-                                <option value="1006">Đồ dùng học tập</option>
-                                <option value="1007">bàn, ghế</option>
-                                <option value="1008">Đèn học</option>
-                                <option value="1009">Đồ gia dụng</option>
-                                <option value="1010">Đồ trang trí</option>
-                                <option value="1011">Thời trang</option>
+                            <div class="col-md-6 mt-2 mb-2 p-0">
+                                <label for="image_main">Danh mục</label>
+                                <select name="category_id" class="form-select-sm form-select" 
+                                style="width: 100%;height: 40px;border: 1px solid #ccc;border-radius: 5px;"
+                                aria-label="Default select example">
+                                    <option selected disabled>Chọn danh mục</option>
+                                    <option value="1000">xe cộ</option>
+                                    <option value="1001">xe máy</option>
+                                    <option value="1002">xe đạp</option>
+                                    <option value="1003">Đồ điện tử</option>
+                                    <option value="1004">Điện thoại, laptop</option>
+                                    <option value="1005">Phụ kiện điện tử</option>
+                                    <option value="1006">Đồ dùng học tập</option>
+                                    <option value="1007">bàn, ghế</option>
+                                    <option value="1008">Đèn học</option>
+                                    <option value="1009">Đồ gia dụng</option>
+                                    <option value="1010">Đồ trang trí</option>
+                                    <option value="1011">Thời trang</option>
                                 </select>
                             </div>
                         <div class="form-row">
@@ -146,8 +149,8 @@
                         </div>
                     </div>
                     <div class="modal-footer form-group">
-                        <button type="submit" class="btn">Thêm sản phẩm</button>
-                        <input type="reset" class="btn" value="Xóa">
+                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                        <input type="reset" class="btn btn-danger " data-dismiss="modal" aria-label="Close" value="Đóng">
                     </div>
                 </form>
             </div>
@@ -243,19 +246,19 @@
 
                             <div class="col-md-4">
                                 <select name="category_id" class="form-select" aria-label="Default select example">
-                                <option selected>Danh muc</option>
-                                <option value="1000">xe cộ</option>
-                                <option value="1001">xe máy</option>
-                                <option value="1002">xe đạp</option>
-                                <option value="1003">Đồ điện tử</option>
-                                <option value="1004">Điện thoại, laptop</option>
-                                <option value="1005">Phụ kiện điện tử</option>
-                                <option value="1006">Đồ dùng học tập</option>
-                                <option value="1007">bàn, ghế</option>
-                                <option value="1008">Đèn học</option>
-                                <option value="1009">Đồ gia dụng</option>
-                                <option value="1010">Đồ trang trí</option>
-                                <option value="1011">Thời trang</option>
+                                <option class="text-capitalize" selected>Danh muc</option>
+                                <option class="text-capitalize" value="1000">Xe Cộ</option>
+                                <option class="text-capitalize" value="1001">Xe máy</option>
+                                <option class="text-capitalize" value="1002">Xe đạp</option>
+                                <option class="text-capitalize" value="1003">Đồ điện tử</option>
+                                <option class="text-capitalize" value="1004">Điện thoại, laptop</option>
+                                <option class="text-capitalize" value="1005">Phụ kiện điện tử</option>
+                                <option class="text-capitalize" value="1006">Đồ dùng học tập</option>
+                                <option class="text-capitalize" value="1007">bàn, ghế</option>
+                                <option class="text-capitalize" value="1008">Đèn học</option>
+                                <option class="text-capitalize" value="1009">Đồ gia dụng</option>
+                                <option class="text-capitalize" value="1010">Đồ trang trí</option>
+                                <option class="text-capitalize" value="1011">Thời trang</option>
                                 </select>
                             </div>
                         <div class="form-row">
@@ -267,7 +270,7 @@
                                 <label for="image_main">Ảnh hiện thị chính</label>
                                 <div class="form-group custom-file">
                                     <input type="file" class="custom-file-input" name="image_main" id="image_main" 
-                                    accept="image/*" required>
+                                    accept="image/*" value="" required>
                                     <label class="custom-file-label" for="image">Chọn ảnh</label>
                                 </div>
                             </div>
@@ -276,7 +279,7 @@
                                 <label for="image_sub">Ảnh hiện thị phụ</label>
                                 <div class="form-group custom-file">
                                     <input type="file" class="custom-file-input" name="image_sub" id="image_sub" 
-                                    multiple accept="image/*" required>
+                                    multiple accept="image/*" value="" required>
                                     <label class="custom-file-label" for="image">Chọn ảnh</label>
                                 </div>
                             </div>
@@ -308,8 +311,11 @@
             removeModal.setAttribute("href", `/product/delete/id=${idproduct}/user=${userid}`)
         }
     </script>
-
     <script>
+        document.getElementById('image_main').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            document.getElementById('image_main_label').innerHTML = fileName;
+        });
         //Thời Gian
         function time() {
             var today = new Date();
@@ -355,6 +361,7 @@
     </script>
 
     <script>
+        $("#reset")
         function formatCurrency(input) {
             // Xóa tất cả các ký tự không phải số
             var value = input.value.replace(/\D/g, '');
