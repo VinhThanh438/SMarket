@@ -6,16 +6,36 @@
         </div>
         <div class="clock"></div>
     </div>
-
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn xóa sản phẩm sau</p>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-add btn-sm deleteBtn">Xác nhận</a>
+                    <button type="button" class="btn btn-sm trash" 
+                    style="width: 16% !important; height: 40px !important;" 
+                    data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row layout-common">
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
                         <div class="row element-button">
-                            <div class="col-sm-2">
+                            {{!-- <div class="col-sm-2">
                               <button class="btn btn-add btn-sm" data-toggle="modal" data-target="#addModal"
                               aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm mới</button>
-                            </div>
+                            </div> --}}
                             <div class="col-sm-2">
                                 <button class="btn btn-sm delete-all" type="button" title="Xóa"
                                     data-toggle="modal" data-target="#removePrdsModal" aria-hidden="true">
@@ -67,7 +87,12 @@
                 </div>
             </div>
     </div>
-
+    <script>
+        const deleteModal = (idproduct, userid) => {
+            const removeModal = $('.deleteBtn')
+            removeModal.setAttribute("href", `/product/delete/id=${idproduct}/user=${userid}`)
+        }
+    </script>
     <script>
         //Thời Gian
         function time() {

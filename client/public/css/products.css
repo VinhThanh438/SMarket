@@ -228,3 +228,15 @@
 .contact_chat{
     color: green;
 }
+.product_img_add_main {
+    overflow: hidden;
+  }
+  
+  .product_img_add {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .product_img_add.slide {
+    transform: translateX(-100%);
+  }

@@ -28,7 +28,7 @@
                 <div class="products_left">
                     <div class="product_show_main">
                         <div class="product_item">
-                            <div class="product_img_main" id="main-image" >
+                            <div class="product_img_main" id="main-image">
                                 <div class="product_next_pre">
                                     <div class="product_pre product_move"><i class="fa-solid fa-chevron-left"></i></div>
                                     <div class="product_next product_move"><i class="fa-solid fa-chevron-right"></i></div>
@@ -36,7 +36,8 @@
                                 <div class="img_container" style="max-width: 612px;">
                                     {{#each data.product.images ~}}
                                     {{#if (eq type "main")}}
-                                        <img class="w-100 h-100" style="aspect-ratio: 1/1;object-fit: contain;max-height: 488px;" src="{{image_link}}" alt="">
+                                    <img class="w-100 h-100" style="aspect-ratio: 1/1;object-fit: contain;max-height: 488px;"
+                                        src="{{image_link}}" alt="">
                                     {{/if}}
                                     {{~/each}}
                                 </div>
@@ -48,7 +49,8 @@
                                 </div>
                                 <ul class="product_img_add d-flex" style="height: 103px;">
                                     {{#each data.product.images ~}}
-                                    <li><img onclick="changeMainImage(main_image,this.src)" class="w-100 h-100" src="{{image_link}}" alt=""></li>
+                                    <li><img onclick="changeMainImage(document.getElementById('main-image').querySelector('img'), this.src)"
+                                            class="w-100 h-100" src="{{image_link}}" alt=""></li>
                                     {{~/each}}
                                 </ul>
                             </div>
@@ -83,18 +85,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product_container m-y-16 bg-white p-x-16 p-y-16">   
+                    <div class="product_container m-y-16 bg-white p-x-16 p-y-16">
                         <div class="product_describe font-weight-bold">Mô tả chi tiết</div>
                         <div class="product_content overflow-hidden" style="height: 180px">
-                            {{#each data.product.product ~}}
-                            <p class="product_detail p-y-8 m-y-8 ">{{description}}</p>
-                            {{~/each}}
-                            {{#each data.user ~}}
-                            <a href="tel:+{{phone_number}}" class="product_contact d-block m-y-8">Nhấn để liên hệ số : {{phone_number}}</a>
-                            {{~/each}}
+                            {{#each data.product.product}}
+                            <p class="product_detail p-y-8 m-y-8">{{description}}</p>
+                            {{/each}}
+                            {{#each data.user}}
+                            <a href="tel:+{{phone_number}}" class="product_contact d-block m-y-8">Nhấn để liên hệ số: {{phone_number}}</a>
+                            {{/each}}
                         </div>
-                        {{!-- If else chỗ xem thêm này đi --}}
-                        <button class="see_more btn btn-light bg-light d-block w-100 p-y-12 outline-none p-x-16"> Xem thêm <i class="fa-solid fa-chevron-down"></i></button>
+                        <button class="see_more btn btn-light bg-light d-block w-100 p-y-12 outline-none p-x-16 d-none"> Xem thêm <i class="fa-solid fa-chevron-down"></i></button>
                     </div>
                 </div>
                 {{#each data.user ~}}
@@ -169,6 +170,56 @@
 </body>
 
 <script>
+    //Click thay đổi ảnh
+    function changeMainImage(mainImage, newImageSrc) {
+         mainImage.src = newImageSrc;
+    }
+    
+    // Tự trượt ảnh phần sub photos
+    document.addEventListener("DOMContentLoaded", function() {
+  var productImgAdd = document.querySelector(".product_img_add");
+  var productAddNext = document.querySelector(".product_add_next");
+  var productAddPre = document.querySelector(".product_add_pre");
+
+  var slideInterval = setInterval(slideNext, 3000);
+
+  function slideNext() {
+    if (productImgAdd.scrollWidth > productImgAdd.offsetWidth) {
+      productImgAdd.classList.add("slide");
+      setTimeout(function() {
+        productImgAdd.appendChild(productImgAdd.firstElementChild);
+        productImgAdd.classList.remove("slide");
+      }, 500);
+    }
+  }
+
+  productAddNext.addEventListener("click", function() {
+    clearInterval(slideInterval);
+    slideNext();
+    slideInterval = setInterval(slideNext, 3000);
+  });
+
+  productAddPre.addEventListener("click", function() {
+    clearInterval(slideInterval);
+    if (productImgAdd.scrollWidth > productImgAdd.offsetWidth) {
+      productImgAdd.insertBefore(productImgAdd.lastElementChild, productImgAdd.firstElementChild);
+      productImgAdd.classList.add("slide");
+      setTimeout(function() {
+        productImgAdd.classList.remove("slide");
+      }, 10);
+    }
+    slideInterval = setInterval(slideNext, 3000);
+  });
+});
+    // Đoạn mã JavaScript
+    document.addEventListener("DOMContentLoaded", function() {
+    var productDetails = document.querySelectorAll(".product_detail");
+    var totalSize = 0;
+    productDetails.forEach(function(detail) {
+        totalSize += detail.textContent.length;
+    });
+    
+    });
     // Xem thêm nội dung bị che
     var product_content = document.querySelector(".product_content");
     var see_more = document.querySelector('.see_more');
