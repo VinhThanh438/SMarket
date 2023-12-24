@@ -12,21 +12,31 @@
                 <div class="tile">
                     <div class="tile-body">
                         <div class="row element-button">
-                            <div class="col-sm-2">
-                              <button class="btn btn-add btn-sm" data-toggle="modal" data-target="#addModal"
-                              aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm mới</button>
+                            <div class="col-sm-4">
+                              <button class="btn btn-add btn-sm text-bold" data-toggle="modal" data-target="#addModal"
+                              aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm</button>
                             </div>
+<<<<<<< HEAD
                             <div class="col-sm-2">
                                 {{#each data.user ~}}
                                 <a class="btn btn-excel btn-sm" href="/spreadsheet/{{user_id}}" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
                                 {{~/each}}
                             </div>
                             <div class="col-sm-2">
+=======
+                            <div class="col-sm-4">
+>>>>>>> 6024a2140d5742f390077487802123ec998065bb
                                 <button class="btn btn-sm delete-all" type="button" title="Xóa"
                                     data-toggle="modal" data-target="#removePrdsModal" aria-hidden="true">
                                     <i class="fas fa-trash-alt"></i> Xóa tất cả 
                                 </button>
                             </div>
+<<<<<<< HEAD
+=======
+                            <div class="col-sm-4">
+                              <button class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                            </div>
+>>>>>>> 6024a2140d5742f390077487802123ec998065bb
                         </div>
                         <hr style="margin-bottom: 30px;">
                         
@@ -100,21 +110,24 @@
                             {{~/each}}
                         </div>
 
-                            <div class="col-md-4">
-                                <select name="category_id" class="form-select" aria-label="Default select example">
-                                <option selected>Danh muc</option>
-                                <option value="1000">xe cộ</option>
-                                <option value="1001">xe máy</option>
-                                <option value="1002">xe đạp</option>
-                                <option value="1003">Đồ điện tử</option>
-                                <option value="1004">Điện thoại, laptop</option>
-                                <option value="1005">Phụ kiện điện tử</option>
-                                <option value="1006">Đồ dùng học tập</option>
-                                <option value="1007">bàn, ghế</option>
-                                <option value="1008">Đèn học</option>
-                                <option value="1009">Đồ gia dụng</option>
-                                <option value="1010">Đồ trang trí</option>
-                                <option value="1011">Thời trang</option>
+                            <div class="col-md-6 mt-2 mb-2 p-0">
+                                <label for="image_main">Danh mục</label>
+                                <select name="category_id" class="form-select-sm form-select" 
+                                style="width: 100%;height: 40px;border: 1px solid #ccc;border-radius: 5px;"
+                                aria-label="Default select example">
+                                    <option selected disabled>Chọn danh mục</option>
+                                    <option value="1000">xe cộ</option>
+                                    <option value="1001">xe máy</option>
+                                    <option value="1002">xe đạp</option>
+                                    <option value="1003">Đồ điện tử</option>
+                                    <option value="1004">Điện thoại, laptop</option>
+                                    <option value="1005">Phụ kiện điện tử</option>
+                                    <option value="1006">Đồ dùng học tập</option>
+                                    <option value="1007">bàn, ghế</option>
+                                    <option value="1008">Đèn học</option>
+                                    <option value="1009">Đồ gia dụng</option>
+                                    <option value="1010">Đồ trang trí</option>
+                                    <option value="1011">Thời trang</option>
                                 </select>
                             </div>
                         <div class="form-row">
@@ -148,8 +161,8 @@
                         </div>
                     </div>
                     <div class="modal-footer form-group">
-                        <button type="submit" class="btn">Thêm sản phẩm</button>
-                        <input type="reset" class="btn" value="Xóa">
+                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                        <input type="reset" class="btn btn-danger " data-dismiss="modal" aria-label="Close" value="Đóng">
                     </div>
                 </form>
             </div>
@@ -254,8 +267,11 @@
             inputId.value = idproduct
         }
     </script>
-
     <script>
+        document.getElementById('image_main').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            document.getElementById('image_main_label').innerHTML = fileName;
+        });
         //Thời Gian
         function time() {
             var today = new Date();
@@ -301,6 +317,7 @@
     </script>
 
     <script>
+        $("#reset")
         function formatCurrency(input) {
             // Xóa tất cả các ký tự không phải số
             var value = input.value.replace(/\D/g, '');
