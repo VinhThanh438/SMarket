@@ -1,0 +1,22 @@
+.lovely_item:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.chat_btn{
+    border: 1px solid red;
+    border-radius: 50px;
+    padding: 4px 24px;
+    color: green;
+}
+.lovely_none{
+
+}
+.lovely-btn{
+    border-radius: 5px;
+    color: var(--white);
+    background-color: orange;
+    border: none;
+    outline: none !important;
+}
+.lovely-btn:hover{
+    background-color:rgb(211, 140, 10) ;
+}
