@@ -77,6 +77,41 @@ const userController = {
         }
     },
 
+    getAdminDashboard: async (req, res, next) => {
+        try {
+            const id = req.params.id;
+
+            const userData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${id}`
+            );
+
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/user=${id}`
+            );
+
+            const data = {
+                user: userData.data,
+                product: productData.data,
+            };
+
+            let con = 0,
+                het = 0;
+            for (let e of data.product) {
+                if (e.state == 'hết hàng') het++;
+                else con++;
+            }
+
+            data.count = [con, het];
+
+            return res.render('admin/dashboard', {
+                layout: 'admin',
+                data: data,
+            });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     adminAddProduct: async (req, res, next) => {
         try {
             console.log(req.body);
@@ -140,6 +175,50 @@ const userController = {
         }
     },
 
+    adminRestoreProduct: async (req, res, next) => {
+        try {
+            const idproduct = req.params.id;
+            const userid = req.params.userid;
+            await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/restore/${idproduct}`
+            );
+            return res.redirect(`/admin/backup/${userid}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    adminDeletePrdForever: async (req, res, next) => {
+        try {
+            const idproduct = req.params.id;
+            const userid = req.params.userid;
+            await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/delete/frv/${idproduct}`
+            );
+            return res.redirect(`/admin/backup/${userid}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    adminUpdateState: async (req, res, next) => {
+        try {
+            const userid = req.params.userid;
+            const state = req.body.state;
+            const idproduct = req.body.productId;
+            console.log(idproduct);
+            await axios.post(
+                `${process.env.SERVER_DOMAIN}/product/state/${idproduct}`,
+                {
+                    state: state,
+                }
+            );
+            return res.redirect(`/admin/${userid}`);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     adminDeleteSelectedPrds: async (req, res, next) => {
         try {
             const userid = req.params.userid;
@@ -164,7 +243,6 @@ const userController = {
             const productData = await axios.get(
                 `${process.env.SERVER_DOMAIN}/product/user=${userData.user_id}`
             );
-            console.log(productData.data);
 
             const data = {
                 user: [userData],

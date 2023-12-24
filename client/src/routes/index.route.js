@@ -21,6 +21,10 @@ const routes = (app) => {
 
     router.post('/search', productController.searchProduct);
 
+    router.get('/spreadsheet/:id', productController.spreadsheet);
+
+    router.get('/favorite', productController.getFavorite);
+
     // user
     router.get('/user/:id', userController.getUserInfor);
 
@@ -38,6 +42,8 @@ const routes = (app) => {
     router.get('/admin/:id', userController.adminController);
 
     router.get('/admin/backup/:id', userController.getAdminBackup);
+
+    router.get('/admin/dashboard/:id', userController.getAdminDashboard);
 
     router.post(
         '/admin/addproduct',
@@ -57,6 +63,18 @@ const routes = (app) => {
         '/product/delete/id=:id/user=:userid',
         userController.adminDeleteProduct
     );
+
+    router.get(
+        '/product/deleteFrv/id=:id/user=:userid',
+        userController.adminDeletePrdForever
+    );
+
+    router.get(
+        '/admin/backup/restore/id=:id/user=:userid',
+        userController.adminRestoreProduct
+    );
+
+    router.post('/admin/update/user=:userid', userController.adminUpdateState);
 
     router.get(
         '/seller',

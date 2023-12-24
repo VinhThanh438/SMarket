@@ -69,7 +69,6 @@ const productController = {
                 ' where tb_product_images.type = ? and tb_product.is_deleted = ? and tb_product.category_id = ? order by tb_product.create_at desc';
 
             const [data] = await pool.execute(query, ['main', 0, categoryId]);
-            console.log(data);
 
             return res.status(statusCode.OK).json(data);
         } catch (err) {
@@ -201,7 +200,22 @@ const productController = {
         }
     },
 
-    // delete product
+    // update product state
+    updatePrdState: async (req, res, next) => {
+        try {
+            query = 'update tb_product set `state`=? where product_id=?;';
+            const productId = req.params.id;
+            const state = req.body.state;
+
+            await pool.execute(query, [state, productId]);
+
+            return res.status(statusCode.OK).json('product updated');
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // delete product temporarily
     deleteProduct: async (req, res, next) => {
         try {
             query = 'update tb_product set `is_deleted`=? where product_id=?;';
@@ -215,7 +229,7 @@ const productController = {
         }
     },
 
-    // delete selected products
+    // delete selected products temporarily
     deleteSelectedProducts: async (req, res, next) => {
         try {
             const selectdId = req.body;
@@ -226,6 +240,39 @@ const productController = {
             const result = await pool.execute(query, [1]);
 
             return res.status(statusCode.OK).json(result);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // delete product forever
+    deleteProductForever: async (req, res, next) => {
+        try {
+            const productId = req.params.id;
+
+            // delete images prd
+            query = 'delete from tb_product_images where product_id=?;';
+            await pool.execute(query, [productId]);
+
+            // delete prd
+            query = 'delete from tb_product where product_id=?;';
+            await pool.execute(query, [productId]);
+
+            return res.status(statusCode.OK).json('product deleted');
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    // restore product
+    restoreProduct: async (req, res, next) => {
+        try {
+            query = 'update tb_product set `is_deleted`=? where product_id=?;';
+            const productId = req.params.id;
+
+            await pool.execute(query, [0, productId]);
+
+            return res.status(statusCode.OK).json('product deleted');
         } catch (err) {
             next(new appError(err));
         }

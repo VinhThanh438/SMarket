@@ -1,0 +1,101 @@
+<style>
+        .lovely_item:hover{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+        .chat_btn{
+            border: 1px solid red;
+            border-radius: 50px;
+            padding: 4px 24px;
+            color: green;
+        }
+        .lovely_none{
+
+        }
+        .lovely-btn{
+            border-radius: 5px;
+            color: var(--white);
+            background-color: orange;
+            border: none;
+            outline: none !important;
+        }
+        .lovely-btn:hover{
+            background-color:rgb(211, 140, 10) ;
+        }
+</style>
+<div class="container bg-light p-0" style="margin-top: 60px;">
+        <div class="lovely_header" >
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#">Library</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+        </div>
+        {{!-- <h5 class="bg-light mt-2 mb-2">Tin đăng đã lưu (1 / 100)</h5> --}}
+        <div class="lovely_main position-relative" style="min-height: 700px;">
+            <ul class="list-unstyled bg-light fv-con">
+                
+            </ul>
+        </div>
+    </div>
+
+<script>
+    const display = () => {
+        const favoriteContainer = document.querySelector('.fv-con')
+        const getData = localStorage.getItem('favorite')
+        const data =  JSON.parse(getData)
+        if (!data) {
+            favoriteContainer.innerHTML = `<li><div class="lovely_none w-50 position-absolute text-center" style="left: 50%;top: 40%;transform: translate(-50%,-50%);">
+                    <p>Bạn chưa đăng tin nào</p>
+                    <p style="color: #747272;">Hãy nhấn nút <i class="fa-solid fa-heart"></i> ở tin đăng để lưu và xem lại sau </p>
+                    <button class="p-2 lovely-btn" >Bắt đầu tìm kiếm</button>
+                </div></li>`
+        } else {
+            let html = ''
+            for (let i = 0; i < data.length; i++) {
+                html += `<li class="lovely_item pr-3 pl-3" style="min-height: 124px; border: 1px solid #f5efef;">
+                            <a class="d-flex d-block p-2 align-items-center" style="color: black;text-decoration: none;" href="/">
+                                <div class="item_img" style="width: 100px;height: 100px;">
+                                    <img style="width: 100%;height: 100%;" src="${data[i].image}" alt="">
+                                </div>
+                                <div class="d-flex justify-content-between item_main ml-3 w-100">
+                                    <div class="item_head">
+                                        <p class="p-0 m-0 mb-5">${data[i].name}</p>
+                                        <strong class="price" style="color: rgb(231, 46, 46);">${data[i].price} đ</strong>
+                                    </div>
+                                    <div class="item_footer d-flex justify-content-between align-items-center">
+                                        <div class="item_interactive d-flex align-items-center justify-content-between mr-2 " style="width: 10%;">
+                                            {{!-- <button class="chat_btn">Chat</button> --}}
+                                            <div class="p-2" style="color: red;" onclick="removeFv(${data[i].id})"><i class="fa-solid fa-heart"
+                                            style="font-size: 20px;"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>`
+            }
+
+            favoriteContainer.innerHTML = html
+        }
+    }
+    display()
+</script>
+
+<script>
+    const removeFv = (id) => {
+        event.preventDefault();
+        const getData = localStorage.getItem('favorite')
+        const data =  JSON.parse(getData)
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].id == id) {
+                data.splice(i, 1)
+                break
+            }
+        }
+
+        localStorage.setItem('favorite', JSON.stringify(data))
+        display()
+    }
+</script>
+</html>

@@ -1,12 +1,8 @@
 @-webkit-keyframes slide-in {
-  0% {
-    left: -16vw; }
   100% {
     left: 0; } }
 
 @keyframes slide-in {
-  0% {
-    left: -16vw; }
   100% {
     left: 0; } }
 
@@ -60,8 +56,7 @@
 
 .container-in {
   -webkit-animation: container-in 0.5s forwards;
-  animation: container-in 0.5s forwards;
-   }
+  animation: container-in 0.5s forwards; }
 
 .container-out {
   -webkit-animation: container-out 0.5s;

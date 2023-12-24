@@ -32,11 +32,20 @@ const routes = (app) => {
         productController.addProduct
     );
 
-    // remove prd
+    // update state
+    router.post('/state/:id', productController.updatePrdState);
+
+    // remove prd temporarily
     router.post('/delete/:id', productController.deleteProduct);
 
-    // remove selected products
+    // remove selected products temporarily
     router.post('/delete-products', productController.deleteSelectedProducts);
+
+    // delete product forever
+    router.post('/delete/frv/:id', productController.deleteProductForever);
+
+    // restore product
+    router.post('/restore/:id', productController.restoreProduct);
 
     // get deleted prds
     router.get('/deleted/user=:id', productController.getDeletedPrds);

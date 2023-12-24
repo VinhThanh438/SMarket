@@ -53,6 +53,11 @@
                         <i class="fa-solid fa-trash-can"></i> Sản phẩm đã xóa
                     </a>
                 </li>
+                <li>
+                    <a href="/admin/dashboard/{{user_id}}" class="btn btn-primary menu-list--btn">
+                        <i class="fa-solid fa-chart-line"></i> Bảng điều khiển
+                    </a>
+                </li>
             </ul>
             {{~/each}}
         </div>
@@ -104,6 +109,18 @@
         }
 
         formatMoney()
+    </script>
+
+    <script>
+        const changeStateColor = () => {
+            const prdState = $$('.prd-state')
+            for (var e of prdState) {
+                if (e.textContent === 'hết hàng') {
+                    e.classList.add('bg-danger')
+                }
+            }
+        }
+        changeStateColor()
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

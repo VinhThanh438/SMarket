@@ -7,7 +7,7 @@
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    margin-top: calc(var(--height-header) + 2px );
+    /* margin-top: calc(var(--height-header) + 2px ); */
 }
 
 .pre_next_icon{

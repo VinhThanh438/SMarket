@@ -17,13 +17,15 @@
                               aria-hidden="true"><i class="fas fa-plus"></i> Thêm sản phẩm mới</button>
                             </div>
                             <div class="col-sm-2">
+                                {{#each data.user ~}}
+                                <a class="btn btn-excel btn-sm" href="/spreadsheet/{{user_id}}" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+                                {{~/each}}
+                            </div>
+                            <div class="col-sm-2">
                                 <button class="btn btn-sm delete-all" type="button" title="Xóa"
                                     data-toggle="modal" data-target="#removePrdsModal" aria-hidden="true">
                                     <i class="fas fa-trash-alt"></i> Xóa tất cả 
                                 </button>
-                            </div>
-                            <div class="col-sm-2">
-                              {{!-- <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a> --}}
                             </div>
                         </div>
                         <hr style="margin-bottom: 30px;">
@@ -49,15 +51,15 @@
                                     <td>{{product_id}}</td>
                                     <td><a href="/userId={{user_id}}/productId={{product_id}}" class="text-secondary">{{product_name}}</a></td>
                                     <td><img src={{image_link}} alt="" width="80px;"></td>
-                                    <td><span class="badge bg-success">{{state}}</span></td>
+                                    <td><span class="badge bg-success prd-state">{{state}}</span></td>
                                     <td class="price">{{price}}</td>
                                     <td>{{category_name}}</td>
                                     <td>{{description}}</td>
                                     <td>
                                         <button class="btn btn-sm trash" type="button" title="Xóa" data-toggle="modal" data-target="#removeModal"
                                         aria-hidden="true" onclick="deleteModal({{product_id}}, {{user_id}})"><i class="fas fa-trash-alt"></i></button>
-                                        <button class="btn btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                        data-target="#updateModal"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#updateModal"
+                                        aria-hidden="true" onclick="updateModal({{product_id}}, {{user_id}}, '{{state}}')" ><i class="fas fa-edit"></i></button>
                                     </td>
                                 </tr>
                                 {{~/each}}
@@ -191,13 +193,6 @@
                     <div class="modal-body">
                         <p>Bạn có muốn xóa các sản phẩm đã chọn</p>
                         <input type="hidden" name="selectedValues" class="selectedValues">
-                        {{!-- <p class="selected-prds" style="display: flex;">
-                            <img src={{image_link}} width="80px;">
-                            <div>
-                                <p>{{category_name}}</p>
-                                <p class="price">{{price}}</p>
-                            </div>
-                        </p> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-add btn-sm deleteBtn">Xác nhận</button>
@@ -214,82 +209,22 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Sửa chi tiết sản phẩm</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi trạng thái sản phẩm</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 {{#each data.user ~}}
-                <form action="/admin/update-selected/user={{user_id}}" method="post" enctype="multipart/form-data">
-                    {{!-- {{#each data.product ~}} --}}
-                    {{!-- {{#if (eq product_id 1023)}} --}}
+                <form action="/admin/update/user={{user_id}}" method="post">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nameproduct">Tên sản phẩm</label>
-                            <input type="text" class="form-control" name="product_name" id="nameproduct" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="priceproduct">Giá sản phẩm</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="price" id="priceproduct"
-                                oninput="formatCurrency(this)" required>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">VND</span>
-                                </div>
-                            </div>
-                            <input type="hidden" name="user_id" value="{{user_id}}">
-                        </div>
-
-                            <div class="col-md-4">
-                                <select name="category_id" class="form-select" aria-label="Default select example">
-                                <option selected>Danh muc</option>
-                                <option value="1000">xe cộ</option>
-                                <option value="1001">xe máy</option>
-                                <option value="1002">xe đạp</option>
-                                <option value="1003">Đồ điện tử</option>
-                                <option value="1004">Điện thoại, laptop</option>
-                                <option value="1005">Phụ kiện điện tử</option>
-                                <option value="1006">Đồ dùng học tập</option>
-                                <option value="1007">bàn, ghế</option>
-                                <option value="1008">Đèn học</option>
-                                <option value="1009">Đồ gia dụng</option>
-                                <option value="1010">Đồ trang trí</option>
-                                <option value="1011">Thời trang</option>
-                                </select>
-                            </div>
-                        <div class="form-row">
-                            {{!-- <div class="col-md-4">
-                                <input type="number" class="form-control" name="condproduct" id="condproduct"
-                                min="0" max="10000" placeholder="Số lượng" required>
-                            </div> --}}
-                            <div class="form-group col-md-5">
-                                <label for="image_main">Ảnh hiện thị chính</label>
-                                <div class="form-group custom-file">
-                                    <input type="file" class="custom-file-input" name="image_main" id="image_main" 
-                                    accept="image/*" required>
-                                    <label class="custom-file-label" for="image">Chọn ảnh</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-5">
-                                <label for="image_sub">Ảnh hiện thị phụ</label>
-                                <div class="form-group custom-file">
-                                    <input type="file" class="custom-file-input" name="image_sub" id="image_sub" 
-                                    multiple accept="image/*" required>
-                                    <label class="custom-file-label" for="image">Chọn ảnh</label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="comment">Mô tả:</label>
-                            <textarea class="form-control" rows="5" name="description" id="comment"></textarea>
+                        <div class="col-md-4">
+                            <select name="state" class="form-select select-state" aria-label="Default select example">
+                            <option value="còn hàng">Còn hàng</option>
+                            <option value="hết hàng" selected>Hết hàng</option>
+                            <input type="hidden" name="productId" class="prd_id">
+                            </select>
                         </div>
                     </div>
-                    {{!-- {{/if}} --}}
-                    {{~/each}}
                     <div class="modal-footer form-group">
                         <button type="submit" class="btn btn-warning btn-sm edit"
                         style="width: 16% !important; height: 40px !important;">Sửa</button>
@@ -298,6 +233,7 @@
                         data-dismiss="modal">Đóng</button>
                     </div>
                 </form>
+                {{~/each}}
             </div>
         </div>
     </div>
@@ -306,6 +242,16 @@
         const deleteModal = (idproduct, userid) => {
             const removeModal = $('.deleteBtn')
             removeModal.setAttribute("href", `/product/delete/id=${idproduct}/user=${userid}`)
+        }
+
+        const updateModal = (idproduct, userid, state) => {
+            const selectForm = $('.select-state')
+            const inputId = $('.prd_id')
+            if (state === 'còn hàng') {
+                selectForm.innerHTML = `<option class="select" value="còn hàng" selected>Còn hàng</option>
+                            <option class="other" value="hết hàng">Hết hàng</option>`
+            }
+            inputId.value = idproduct
         }
     </script>
 
