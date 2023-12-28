@@ -36,7 +36,7 @@
                                 <div class="img_container" style="max-width: 612px;">
                                     {{#each data.product.images ~}}
                                     {{#if (eq type "main")}}
-                                    <img class="w-100 h-100" style="aspect-ratio: 1/1;object-fit: contain;max-height: 488px;"
+                                    <img class="w-100 h-100 image-main" style="aspect-ratio: 1/1;object-fit: contain;max-height: 488px;"
                                         src="{{image_link}}" alt="">
                                     {{/if}}
                                     {{~/each}}
@@ -64,7 +64,7 @@
                                     <div class="product_interactive row">
                                         <input type="hidden" class="get-id" value="{{product_id}}">
                                         <a class="product_share" href="#"> <i class="fa-solid fa-share"></i> Chia sẻ</a>
-                                        <a class="product_share" onclick="favorite('{{product_id}}', '{{price}}', '{{product_name}}')"> 
+                                        <a class="product_share" onclick="favorite('{{product_id}}', '{{price}}', '{{product_name}}')" style="cursor: pointer;"> 
                                             <i class="fa-regular fa-heart favorite-icon"></i> Lưu tin 
                                         </a>
                                     </div>

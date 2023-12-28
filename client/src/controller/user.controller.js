@@ -114,7 +114,6 @@ const userController = {
 
     adminAddProduct: async (req, res, next) => {
         try {
-            console.log(req.body);
             const data = new FormData();
             const image_main_path = req.files.image_main[0].path;
 
@@ -182,6 +181,7 @@ const userController = {
             await axios.post(
                 `${process.env.SERVER_DOMAIN}/product/restore/${idproduct}`
             );
+            // changeUserLog('add', userid);
             return res.redirect(`/admin/backup/${userid}`);
         } catch (err) {
             next(new appError(err));
@@ -283,6 +283,8 @@ const userController = {
 
             return res.redirect('/');
         } catch (err) {
+            if (err.response.status === 401)
+                return res.redirect(req.headers.referer);
             next(new appError(err));
         }
     },

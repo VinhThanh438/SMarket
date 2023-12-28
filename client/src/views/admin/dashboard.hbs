@@ -1,11 +1,151 @@
- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
- {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
- <style>
-    #dashboard {
-        display: flex;
-        width: 50%;
-    }
- </style>
+<style>
+   #dashboard {
+       display: flex;
+       width: 50%;
+       height: 400px;
+   }
+
+   .scrollbar-deep-purple::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollbar-deep-purple::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.scrollbar-deep-purple::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #512da8;
+}
+
+.scrollbar-deep-purple {
+    scrollbar-color: #512da8 #F5F5F5;
+}
+
+.scrollbar-cyan::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollbar-cyan::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.scrollbar-cyan::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #00bcd4;
+}
+
+.scrollbar-cyan {
+    scrollbar-color: #00bcd4 #F5F5F5;
+}
+
+.scrollbar-dusty-grass::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollbar-dusty-grass::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.scrollbar-dusty-grass::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-image: -webkit-linear-gradient(330deg, #d4fc79 0%, #96e6a1 100%);
+    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+}
+
+.scrollbar-ripe-malinka::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollbar-ripe-malinka::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.scrollbar-ripe-malinka::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+    background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bordered-deep-purple::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border: 1px solid #512da8;
+}
+
+.bordered-deep-purple::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: none;
+}
+
+.bordered-cyan::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border: 1px solid #00bcd4;
+}
+
+.bordered-cyan::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: none;
+}
+
+.square::-webkit-scrollbar-track {
+    border-radius: 0 !important;
+}
+
+.square::-webkit-scrollbar-thumb {
+    border-radius: 0 !important;
+}
+
+.thin::-webkit-scrollbar {
+    width: 6px;
+}
+
+.example-1 {
+    position: relative;
+    overflow-y: scroll;
+    height: 100px;
+}
+
+.m_add {
+  color: rgb(1, 198, 1);
+}
+
+.m_edit {
+  color: yellow;
+}
+
+.m_delete {
+  color: red;
+}
+
+.m_restore {
+  color: burlywood;
+}
+</style>
+
+<div id="admin-product">
+    <div class="product-header layout-common">
+        <div>
+            <b>Danh sách các sản phẩm trong thùng rác</b>
+            <span class="badge badge-secondary badge-pill">{{data.length}}</span>
+        </div>
+        <div class="clock"></div>
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 <div id="dashboard">
     <canvas id="myChart"></canvas>
@@ -16,12 +156,35 @@
     {{~/each}}
 </div>
 
+<!-- Grid row -->
+<div class="row" style="padding-left: 20px;">
+
+  <!-- Grid column -->
+  <div class="col-md-6 mb-4">
+
+    <!-- Exaple 1 -->
+    <h3 style="text-align: center; color: #7e7d7d;">Thông báo hành động</h3>
+    <div class="card example-1 scrollbar-ripe-malinka" >
+      <div class="card-body" style="background-color: #333;">
+        {{!-- <h4 id="section1"><strong>First title of the news</strong></h4> --}}
+        {{#each data.user ~}}
+        <input type="hidden" name="userId" class="userId" value="{{user_id}}">
+        {{~/each}}
+        <ul class="log_list">
+        </ul>
+      </div>
+    </div>
+    <!-- Exaple 1 -->
+
+  </div>
+</div>
+<!-- Grid row -->
+
 <script>
     let myChart = document.getElementById('myChart').getContext('2d');
     let secondChart = document.getElementById('secondChart').getContext('2d');
     const con = document.querySelectorAll('.con')
     const het = document.querySelectorAll('.het')
-    console.log(con[0].value, het[1].value)
     // Global Options
     Chart.defaults.global.defaultFontFamily = 'Arial';
     Chart.defaults.global.defaultFontSize = '16';
@@ -36,7 +199,7 @@
           data:[
             con[0].value,
             het[1].value,
-            14
+            0
           ],
           //backgroundColor:'green',
           backgroundColor:[
@@ -136,3 +299,97 @@
     });
   </script>
 
+    <script>
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.querySelector('.clock').innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+
+        time()
+    </script>
+
+    <script>
+      const logData = () => {
+        const frameData = document.querySelector('.log_list')
+        const getData = localStorage.getItem('userLog')
+        const userId = document.querySelector('.userId')
+        const data = JSON.parse(getData)
+        let html = ''
+        for (e of data) {
+            if (e.userId == userId.value) {
+                e.data.map(el => {
+                  let message = ''
+                  let className = ''
+                  switch (el) {
+                    case 'add': 
+                      message = 'bạn đã thêm 1 sản phẩm'
+                      className = 'm_add'
+                      break
+                    case 'edit': 
+                      message = 'bạn đã sửa 1 sản phẩm'
+                      className = 'm_edit'
+                      break
+                    case 'rms': 
+                      message = 'bạn đã xóa nhiều sản phẩm'
+                      className = 'm_delete'
+                      break
+                    case 'rmt': 
+                      message = 'bạn đã cho 1 sản phẩm vào thùng rác'
+                      className = 'm_delete'
+                      break
+                    case 'rmf': 
+                      message = 'bạn đã xóa vĩnh viễn một sản phẩm'
+                      className = 'm_delete'
+                      break
+                    case 'rs': 
+                      message = 'bạn đã khôi phục một sản phẩm'
+                      className = 'm_restore'
+                      break
+                  }
+                  html += `<li class="${className}">${message}</li>`
+                })
+            }
+        }
+
+        frameData.innerHTML = html
+      }
+
+      logData()
+    </script>
+</div>

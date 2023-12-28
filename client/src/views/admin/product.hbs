@@ -151,7 +151,9 @@
                         </div>
                     </div>
                     <div class="modal-footer form-group">
-                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                        {{#each data.user ~}}
+                        <button type="button" class="btn btn-primary" onclick="userLog(event, {{user_id}}, 'add')">Thêm sản phẩm</button>
+                        {{~/each}}
                         <input type="reset" class="btn btn-danger " data-dismiss="modal" aria-label="Close" value="Đóng">
                     </div>
                 </form>
@@ -172,7 +174,10 @@
                     <p>Bạn có chắc muốn xóa sản phẩm sau</p>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-add btn-sm deleteBtn">Xác nhận</a>
+                    {{#each data.user ~}}
+                    <a type="button" class="btn btn-add btn-sm deleteBtn"
+                    onclick="userLog(event, {{user_id}}, 'rmt')">Xác nhận</a>
+                    {{~/each}}
                     <button type="button" class="btn btn-sm trash" 
                     style="width: 16% !important; height: 40px !important;" 
                     data-dismiss="modal">Đóng</button>
@@ -198,7 +203,10 @@
                         <input type="hidden" name="selectedValues" class="selectedValues">
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-add btn-sm deleteBtn">Xác nhận</button>
+                        {{#each data.user ~}}
+                        <button type="button" class="btn btn-add btn-sm deleteBtn"
+                        onclick="userLog(event, {{user_id}}, 'rms')">Xác nhận</button>
+                        {{~/each}}
                         <button type="button" class="btn btn-sm trash" 
                         style="width: 16% !important; height: 40px !important;" 
                         data-dismiss="modal">Đóng</button>
@@ -229,8 +237,9 @@
                         </div>
                     </div>
                     <div class="modal-footer form-group">
-                        <button type="submit" class="btn btn-warning btn-sm edit"
-                        style="width: 16% !important; height: 40px !important;">Sửa</button>
+                        <button type="button" class="btn btn-warning btn-sm edit"
+                        style="width: 16% !important; height: 40px !important;"
+                        onclick="userLog(event, {{user_id}}, 'edit')">Sửa</button>
                         <button type="button" class="btn btn-sm trash" 
                         style="width: 16% !important; height: 40px !important;" 
                         data-dismiss="modal">Đóng</button>

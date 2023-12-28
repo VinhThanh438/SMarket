@@ -1,3 +1,7 @@
+:root {
+  --bg-color: rgb(215, 140, 1);
+}
+
 @-webkit-keyframes slide-in {
   100% {
     left: 0; } }
@@ -68,7 +72,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 0 10px;
-  background-color: #001c40;
+  background-color: var(--bg-color);
   position: fixed;
   z-index: 1; }
   #admin-main header .header-bar, #admin-main header .log-out {
@@ -91,7 +95,7 @@
   width: 16vw;
   height: 100vh;
   left: -16vw;
-  background-color: #001c40;
+  background-color: var(--bg-color);
   z-index: 2; }
   #admin-main #menu hr {
     background-color: #c6defd;
@@ -108,7 +112,7 @@
     #admin-main #menu .menu-list li {
       list-style-type: none; }
       #admin-main #menu .menu-list li a {
-        background-color: #001c40;
+        background-color: var(--bg-color);
         border: none;
         margin: 12px 0;
         border-radius: 6px; }

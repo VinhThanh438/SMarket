@@ -19,7 +19,10 @@
                     <p>Bạn có chắc muốn xóa sản phẩm sau</p>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-add btn-sm deleteBtn">Xác nhận</a>
+                    {{#each data.user ~}}
+                    <a type="button" class="btn btn-add btn-sm deleteBtn"
+                    onclick="userLog(event, {{user_id}}, 'rmf')">Xác nhận</a>
+                    {{~/each}}
                     <button type="button" class="btn btn-sm trash" 
                     style="width: 16% !important; height: 40px !important;" 
                     data-dismiss="modal">Đóng</button>
@@ -97,7 +100,10 @@
                     <p>Bạn có muốn xóa vĩnh viễn sản phẩm sau</p>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-add btn-sm deleteBtn">Xác nhận</a>
+                    {{#each data.user ~}}
+                    <a type="button" class="btn btn-add btn-sm deleteBtn"
+                    onclick="userLog(event, {{user_id}}, 'rmf')">Xác nhận</a>
+                    {{~/each}}
                     <button type="button" class="btn btn-sm trash" 
                     style="width: 16% !important; height: 40px !important;" 
                     data-dismiss="modal">Đóng</button>
@@ -146,14 +152,15 @@
                 <div class="modal-body">
                     <p>Bạn có muốn khôi phục lại sản phẩm sau</p>
                 </div>
-                {{~/each}}
                 <div class="modal-footer form-group">
                     <a type="button" class="btn btn-warning btn-sm restoreBtn"
-                    style="width: 18% !important; height: 40px !important;">Khôi phục</a>
+                    style="width: 18% !important; height: 40px !important;"
+                    onclick="userLog(event, {{user_id}}, 'rs')">Khôi phục</a>
                     <button type="button" class="btn btn-sm trash" 
                     style="width: 16% !important; height: 40px !important;" 
                     data-dismiss="modal">Đóng</button>
                 </div>
+                {{~/each}}
             </div>
         </div>
     </div>

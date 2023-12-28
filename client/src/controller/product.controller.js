@@ -57,19 +57,6 @@ const productController = {
 
     getFavorite: async (req, res, next) => {
         try {
-            // const productId = req.params.productId;
-            // const userId = req.params.userId;
-
-            // const getUser = await axios.get(
-            //     `${process.env.SERVER_DOMAIN}/user/id=${userId}`
-            // );
-
-            // const getProduct = await axios.get(
-            //     `${process.env.SERVER_DOMAIN}/product/id=${productId}`
-            // );
-
-            // const data = { product: getProduct.data, user: getUser.data };
-
             return res.render('favorite');
         } catch (err) {
             next(new appError(err));
