@@ -42,6 +42,9 @@
                 <img src="{{avatar}}" alt="Avatar" class="rounded-circle" width="100px">
                 <h5 class="text-white">{{user_name}}</h5>
             </div>
+            {{#if (eq user_role "admin")}}
+            <ul class="menu-list"></ul>
+            {{else}}
             <ul class="menu-list">
                 <li>
                     {{!-- <a href="/admin/{{user_id}}" class="btn btn-primary menu-list--btn btn-click"> --}}
@@ -60,6 +63,7 @@
                     </a>
                 </li>
             </ul>
+            {{/if}}
             {{~/each}}
         </div>
         

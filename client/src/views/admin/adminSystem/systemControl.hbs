@@ -1,0 +1,230 @@
+<div id="admin-product">
+    <div class="product-header layout-common">
+        <div>
+            <b>Danh sách người dùng</b>
+            <span class="badge badge-secondary badge-pill">{{data.length}}</span>
+        </div>
+        <div class="clock"></div>
+    </div>
+
+    <div class="row layout-common">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                {{#each data.user ~}}
+                                <a class="btn btn-excel btn-sm" href="/spreadsheet/{{user_id}}" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+                                {{~/each}}
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 30px;">
+                        
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th width="100">User ID</th>
+                                    <th width="230">Tên người dùng</th>
+                                    <th width="200">Ảnh</th>
+                                    <th width="160">Số điện thoại</th>
+                                    <th width="140">Ngày tạo</th>
+                                    <th>Địa chỉ</th>
+                                    <th width="20">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each data.user ~}}
+                                <input type="hidden" class="adminId" value="{{user_id}}">
+                                {{~/each}}
+                                {{#each data.product ~}}
+                                <tr>
+                                    <td width="10"><input type="checkbox" name="checkbox" value="{{user_id}}"></td>
+                                    <td>{{user_id}}</td>
+                                    <td><a href="/user/{{user_id}}" class="text-secondary">{{user_name}}</a></td>
+                                    <td><img src={{avatar}} alt="" width="80px;"></td>
+                                    <td><span class="badge bg-success prd-state">{{phone_number}}</span></td>
+                                    <td class="formatTime">{{create_at}}</td>
+                                    <td>{{address}}</td>
+                                    <td>
+                                        {{!-- {{#each data.user ~}} --}}
+                                        <button class="btn btn-sm trash" type="button" title="Xóa" data-toggle="modal" data-target="#removeModal"
+                                        aria-hidden="true" onclick="deleteModal({{user_id}})"><i class="fas fa-trash-alt"></i></button>
+                                        {{!-- {{~/each}} --}}
+                                    </td>
+                                </tr>
+                                {{~/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn xóa thông tin người dùng sau</p>
+                </div>
+                <div class="modal-footer">
+                    {{#each data.user ~}}
+                    <a type="button" class="btn btn-add btn-sm deleteBtn"
+                    onclick="userLog(event, {{user_id}}, 'rmt')">Xác nhận</a>
+                    {{~/each}}
+                    <button type="button" class="btn btn-sm trash" 
+                    style="width: 16% !important; height: 40px !important;" 
+                    data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //const $ = (selection) => document.querySelector(selection)
+    </script>
+
+    <script>
+        const deleteModal = (userid) => {
+            const removeModal = $('.deleteBtn')
+            const adminId = $('.adminId')
+            removeModal.setAttribute("href", `/user/delete/id=${userid}/adminId=${adminId.value}`)
+        }
+    </script>
+    <script>
+        document.getElementById('image_main').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            document.getElementById('image_main_label').innerHTML = fileName;
+        });
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.querySelector('.clock').innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+
+        time()
+    </script>
+
+    <script>
+    let selectedValues = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy ra checkbox "all" và tất cả các checkbox khác
+        var checkboxAll = document.getElementById('all');
+        var checkboxes = document.querySelectorAll('input[name="checkbox"]');
+
+        // Thêm sự kiện cho checkbox "all"
+        checkboxAll.addEventListener('change', function() {
+            // Lấy trạng thái hiện tại của checkbox "all"
+            var isChecked = checkboxAll.checked;
+
+            // Đặt trạng thái của tất cả các checkbox khác giống với checkbox "all"
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = isChecked;
+                updateSelectedValues(checkbox);
+            });
+        });
+
+        // Sự kiện khi nhấn vào từng checkbox
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                // Cập nhật mảng selectedValues khi checkbox thay đổi trạng thái
+                updateSelectedValues(checkbox);
+
+                // Kiểm tra xem có cần tích vào ô chọn tất cả không
+                checkboxAll.checked = checkboxes.length === selectedValues.length;
+            });
+        });
+
+        // Hàm cập nhật mảng selectedValues
+        function updateSelectedValues(checkbox) {
+            if (checkbox.checked) {
+                selectedValues.push(checkbox.value);
+            } else {
+                // Bỏ checkbox ra khỏi mảng nếu bị bỏ tích
+                selectedValues = selectedValues.filter(value => value !== checkbox.value);
+            }
+            const inputValues = document.querySelector('.selectedValues');
+            inputValues.value = selectedValues;
+        }
+    });
+    </script>
+
+    <script>
+      const getTime = document.querySelector('.formatTime')
+
+      const formatTimeSince = (timestamp) => {
+        const now = new Date();
+        const productTime = new Date(timestamp);
+        const timeDifference = now - productTime;
+
+        const seconds = Math.floor(timeDifference / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+        const years = Math.floor(months / 12);
+
+        if (years > 0) {
+            return `${years} năm trước`;
+        } else if (months > 0) {
+            return `${months} tháng trước`;
+        } else if (days > 0) {
+            return `${days} ngày trước`;
+        } else if (hours > 0) {
+            return `${hours} giờ trước`;
+        } else if (minutes > 0) {
+            return `${minutes} phút trước`;
+        } else {
+            return `${seconds} giây trước`;
+        }
+      }
+
+      // Sử dụng hàm formatTimeSince với thời gian sản phẩm
+      const productTimestamp = "2023-10-23 11:47:39"; // Định dạng thời gian trong MySQL
+      for (let i = 0; i < getTime.length; i++) {
+        getTime[i].innerText = formatTimeSince(getTime[i].textContent);
+      }
+    </script>
+</div>

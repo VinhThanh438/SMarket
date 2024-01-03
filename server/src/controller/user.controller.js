@@ -7,6 +7,18 @@ require('dotenv').config();
 let query;
 
 const userController = {
+    getAllUser: async (req, res, next) => {
+        try {
+            query = 'select * from tb_user';
+
+            const [data] = await pool.execute(query);
+
+            return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
     getUser: async (req, res, next) => {
         try {
             const id = req.params.id;
@@ -15,6 +27,19 @@ const userController = {
             const [data] = await pool.execute(query, [id]);
 
             return res.status(statusCode.OK).json(data);
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    deleteUser: async (req, res, next) => {
+        try {
+            const id = req.params.id;
+            query = 'delete from tb_user where user_id = ?';
+
+            await pool.execute(query, [id]);
+
+            return res.status(statusCode.OK).json({ message: 'user deleted!' });
         } catch (err) {
             next(new appError(err));
         }
@@ -181,6 +206,33 @@ const userController = {
             });
         } catch (err) {
             next(new appError(err));
+        }
+    },
+
+    updateUser: async (req, res, next) => {
+        try {
+            query =
+                'UPDATE tb_user SET `user_name`=?,`phone_number`=?,`address`=? WHERE `user_id` = ?';
+
+            //   let avatarUrl;
+            //   if (req.file) {
+            //     avatarUrl = await uploadToCloudinary(req.file);
+            //   }
+
+            const values = [
+                req.body.user_name,
+                req.body.phone_number,
+                // avatarUrl || req.body.avatar,
+                req.body.address,
+                req.body.user_id,
+            ];
+            console.log(values);
+
+            await pool.execute(query, values);
+
+            return res.status(200).json({ message: 'User has been updated.' });
+        } catch (error) {
+            return next(error);
         }
     },
 };

@@ -38,6 +38,8 @@ const routes = (app) => {
 
     router.get('/logout', userController.logOut);
 
+    router.post('/user/update', userController.updateUser);
+
     // admin
     router.get('/admin/:id', userController.adminController);
 
@@ -106,6 +108,16 @@ const routes = (app) => {
         (req, res, next) => {
             return res.send(req.user);
         }
+    );
+
+    // system admin controller
+    router.get('/system/login', userController.systemLogin);
+
+    router.post('/system/login', userController.systemLogInHanle);
+
+    router.get(
+        '/user/delete/id=:id/adminId=:adminId',
+        userController.systemDeleteUser
     );
 
     return app.use('/', router);

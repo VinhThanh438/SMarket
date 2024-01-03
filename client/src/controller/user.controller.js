@@ -181,7 +181,7 @@ const userController = {
             await axios.post(
                 `${process.env.SERVER_DOMAIN}/product/restore/${idproduct}`
             );
-            // changeUserLog('add', userid);
+
             return res.redirect(`/admin/backup/${userid}`);
         } catch (err) {
             next(new appError(err));
@@ -206,7 +206,6 @@ const userController = {
             const userid = req.params.userid;
             const state = req.body.state;
             const idproduct = req.body.productId;
-            console.log(idproduct);
             await axios.post(
                 `${process.env.SERVER_DOMAIN}/product/state/${idproduct}`,
                 {
@@ -244,8 +243,12 @@ const userController = {
                 `${process.env.SERVER_DOMAIN}/product/user=${userData.user_id}`
             );
 
+            userData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${userData.user_id}`
+            );
+
             const data = {
-                user: [userData],
+                user: userData.data,
                 product: productData.data,
             };
 
@@ -331,6 +334,114 @@ const userController = {
         res.clearCookie('refreshToken');
         res.clearCookie('accessToken');
         return res.redirect('/');
+    },
+
+    // system admin login
+    systemLogin: async (req, res, next) => {
+        try {
+            return res.render('admin/adminSystem/logIn', { layout: 'empty' });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    systemDeleteUser: async (req, res, next) => {
+        try {
+            const id = req.params.id;
+            const adminId = req.params.adminId;
+            console.log(id, adminId);
+
+            const usersData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user`
+            );
+
+            const adminData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${adminId}`
+            );
+
+            const rs = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/delete/${id}`
+            );
+
+            const data = {
+                user: adminData.data,
+                product: usersData.data,
+            };
+
+            return res.render('admin/adminSystem/systemControl', {
+                layout: 'admin',
+                data: data,
+            });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    systemLogInHanle: async (req, res, next) => {
+        try {
+            const userData = await axios.post(
+                `${process.env.SERVER_DOMAIN}/user/login`,
+                {
+                    username: req.body.username,
+                    password: req.body.password,
+                    provider: req.body.provider,
+                }
+            );
+
+            // check user data
+            const decode = jwt.decode(userData.data.accessToken);
+
+            if (decode.user_role === 'admin') {
+                const usersData = await axios.get(
+                    `${process.env.SERVER_DOMAIN}/user`
+                );
+                const data = {
+                    user: [decode],
+                    product: usersData.data,
+                };
+                console.log(data);
+
+                return res.render('admin/adminSystem/systemControl', {
+                    layout: 'admin',
+                    data: data,
+                });
+            }
+
+            return res.render('admin/adminSystem/logIn', { layout: 'empty' });
+        } catch (err) {
+            next(new appError(err));
+        }
+    },
+
+    updateUser: async (req, res, next) => {
+        try {
+            const { user_id, user_name, phone_number, address } = req.body;
+            console.log(user_id, user_name, phone_number, address);
+
+            await axios.post(`${process.env.SERVER_DOMAIN}/user/update`, {
+                user_id,
+                user_name,
+                phone_number,
+                address,
+            });
+
+            const productData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/product/user=${user_id}`
+            );
+
+            const userData = await axios.get(
+                `${process.env.SERVER_DOMAIN}/user/id=${user_id}`
+            );
+
+            const data = {
+                user: userData.data,
+                product: productData.data,
+            };
+
+            return res.render('sellerInfor', { data: data });
+        } catch (err) {
+            next(new appError(err));
+        }
     },
 };
 
